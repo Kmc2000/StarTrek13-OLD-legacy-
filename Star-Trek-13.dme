@@ -2306,6 +2306,7 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "StarTrek13\runabout.dmm"
 #include "StarTrek13\z8.dmm"
 #include "StarTrek13\Ships\job_types.dm"
 #include "StarTrek13\Ships\ship.dm"
