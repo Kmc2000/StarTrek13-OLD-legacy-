@@ -1,3 +1,14 @@
-Hi if you're reading this this code is unreleased, please don't leak it until we have something worth sharing
+We're on github now!
+
+All this stuff is super WIP and has a load of bugs.
+
+
+LIST OF CHANGED FILES OUTSIDE THIS FOLDER:
+
+Add any files you change outside of the startrek13 subfolder:
+
+Click.dm ~Kmc
+Trek.dm ~ Kmc (uniforms)
+Configs ~ Kmc
 
 Thanks ~Kmc

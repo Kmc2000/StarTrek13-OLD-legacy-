@@ -1290,6 +1290,15 @@ obj/structure/torpedo_launcher/proc/fire()
 
 #undef TORPEDO_MODE
 
+
+
+/obj/effect/mob_spawn/human/alive/trek
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	death = FALSE
+	roundstart = FALSE
+	outfit = /datum/outfit/job/crewman
+
 /*
 
 #define CHEST 1

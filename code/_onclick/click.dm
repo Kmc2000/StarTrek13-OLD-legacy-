@@ -105,6 +105,10 @@
 		RestrainedClickOn(A)
 		return
 
+	if(istype(loc,/obj/structure/overmap/ship))
+		var/obj/structure/overmap/ship/S = loc //Overmap ship code, so that they can fire.
+		return S.click_action(A,src,params)
+
 	if(in_throw_mode)
 		throw_item(A)
 		return
@@ -285,7 +289,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	swap_hand()
@@ -349,7 +353,7 @@
 	if(!stat && mind && iscarbon(A) && A != src)
 		var/datum/antagonist/changeling/C = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(C && C.chosen_sting)
-			C.chosen_sting.try_to_sting(src,A)	
+			C.chosen_sting.try_to_sting(src,A)
 			next_click = world.time + 5
 			return
 	..()
