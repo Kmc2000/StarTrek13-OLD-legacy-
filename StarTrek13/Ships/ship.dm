@@ -1297,7 +1297,7 @@ obj/structure/torpedo_launcher/proc/fire()
 	icon_state = "sleeper"
 	death = FALSE
 	roundstart = FALSE
-	outfit = /datum/outfit/job/assistant
+	outfit = /datum/outfit/job/crewman
 
 /*
 
