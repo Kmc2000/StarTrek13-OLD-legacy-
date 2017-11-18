@@ -422,7 +422,7 @@
 		return I.attackby(src, user)
 	if(tricorder_science_mode(I, user))
 		var/B
-		B = input(user, "Select mode:","Tricorder scanner",B) in list("t ray scanner","mining scanner","gas analyzer","detective scanner","transporter tag", "cancel")
+		B = input("Select mode:","Tricorder scanner",B) in list("t ray scanner","mining scanner","gas analyzer","detective scanner","transporter tag", "cancel") //this is broken
 		switch(B)
 			if("t ray scanner")
 				rayscan.attack_self(user)

@@ -31,7 +31,7 @@
 AdminOnVacation	=	+STEALTH
  
 Head Coder	=	+EVERYTHING
-Project Lead	=	+EVERYTHING
+Host	=	+EVERYTHING
  
 Lead Admin	=	+EVERYTHING
 Super Admin	=	+EVERYTHING
@@ -42,7 +42,6 @@ Moderator	=	+STEALTH +ADMIN +REJUV +BAN +TICKET
 Trial Moderator	=	+STEALTH +ADMIN +REJUV +TICKET
  
 Super Coder	=	+ADMIN +VAREDIT +DEBUG +SERVER +FUN +BUILDMODE +SPAWN
-Coder in training	=	+STEALTH
 Lore Consultant	=	+STEALTH
 Coder	=	+ADMIN +VAREDIT +DEBUG +SERVER +FUN +BUILDMODE +SPAWN
  
