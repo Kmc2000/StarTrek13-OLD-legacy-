@@ -10,5 +10,6 @@ Add any files you change outside of the startrek13 subfolder:
 Click.dm ~Kmc
 Trek.dm ~ Kmc (uniforms)
 Configs ~ Kmc
+Jobs.dm ~Kmc
 
 Thanks ~Kmc
