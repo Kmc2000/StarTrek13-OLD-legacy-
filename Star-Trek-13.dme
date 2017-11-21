@@ -2308,6 +2308,7 @@
 #include "interface\skin.dmf"
 #include "StarTrek13\runabout.dmm"
 #include "StarTrek13\z8.dmm"
+#include "StarTrek13\lavalandedits\trophies.dm"
 #include "StarTrek13\Ships\job_types.dm"
 #include "StarTrek13\Ships\ship.dm"
 #include "StarTrek13\Ships\transporter.dm"
