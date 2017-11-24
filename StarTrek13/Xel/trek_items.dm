@@ -422,7 +422,7 @@
 		return I.attackby(src, user)
 	if(tricorder_science_mode(I, user))
 		var/B
-		B = input("Select mode:","Tricorder scanner",B) in list("t ray scanner","mining scanner","gas analyzer","detective scanner","transporter tag", "cancel") //this is broken
+		B = input(user, "Select mode:","Tricorder scanner",B) in list("t ray scanner","mining scanner","gas analyzer","detective scanner","transporter tag", "cancel") //this is broken
 		switch(B)
 			if("t ray scanner")
 				rayscan.attack_self(user)
@@ -436,10 +436,10 @@
 				detscan.attack_self(user)
 			if("transporter tag")
 				if(!I in transporter_controller.retrieveable)
-					user << "[I] has been tagged for transportation and can now be beamed up"
+					to_chat(user,"[I] has been tagged for transportation and can now be beamed up")
 					transporter_controller.retrieveable += I
 				else
-					user << "[I] has already been tagged for transportation."
+					to_chat(user,"[I] has already been tagged for transportation.")
 			if("cancel")
 				return
 	else if(medical)

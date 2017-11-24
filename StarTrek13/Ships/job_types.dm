@@ -390,8 +390,8 @@ Lawyer
 	jobtype = /datum/job/aide
 
 	belt = /obj/item/device/pda/lawyer
-	ears = /obj/item/clothing/under/trek/command/next
-	uniform = /obj/item/clothing/under/lawyer/bluesuit
+	ears = /obj/item/device/radio/headset/heads/hop
+	uniform = /obj/item/clothing/under/trek/command/next
 //	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_hand = /obj/item/storage/briefcase/lawyer
@@ -775,7 +775,6 @@ Chief Engineer
 	ears = /obj/item/device/radio/headset/heads/ce
 	uniform = /obj/item/clothing/under/trek/engsec/next
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/hardhat/white
 	gloves = /obj/item/clothing/gloves/color/black/ce
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced=1,/obj/item/device/tricorder)
@@ -830,7 +829,6 @@ Station Engineer
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/trek/engsec/next
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/device/tricorder
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 
@@ -902,3 +900,687 @@ Atmospheric Technician
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = slot_s_store
+
+/*
+Chief Medical Officer
+*/
+/datum/job/cmo
+	title = "Chief Medical Officer"
+	flag = CMO_JF
+	department_head = list("Captain")
+	department_flag = MEDSCI
+	head_announce = list("Medical")
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the captain"
+	selection_color = "#ffddf0"
+	req_admin_notify = 1
+	minimal_player_age = 7
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_MEDICAL
+
+	outfit = /datum/outfit/job/cmo
+
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_HEADS, ACCESS_MINERAL_STOREROOM,
+			ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_CMO, ACCESS_SURGERY, ACCESS_RC_ANNOUNCE,
+			ACCESS_KEYCARD_AUTH, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS)
+
+/datum/outfit/job/cmo
+	name = "Chief Medical Officer"
+	jobtype = /datum/job/cmo
+
+	id = /obj/item/card/id/silver
+	belt = /obj/item/device/pda/heads/cmo
+	l_pocket = /obj/item/pinpointer/crew
+	ears = /obj/item/device/radio/headset/heads/cmo
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	l_hand = /obj/item/storage/firstaid/regular
+	suit_store = /obj/item/device/flashlight/pen
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
+
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+//NOTICE: ALL SCIENCE RElATED JOBS/RESEARCH WILL WORK ON STARBASES, ONLY MEDICAL DOCTORS ETC. WILL WORK ON THE SHIPS.
+
+
+/*
+Medical Doctor
+*/
+/datum/job/doctor
+	title = "Medical Doctor"
+	flag = DOCTOR
+	department_head = list("Chief Medical Officer")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 5
+	spawn_positions = 3
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+	outfit = /datum/outfit/job/doctor
+
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
+
+/datum/outfit/job/doctor
+	name = "Medical Doctor"
+	jobtype = /datum/job/doctor
+
+	belt = /obj/item/device/pda/medical
+	ears = /obj/item/device/radio/headset/headset_med
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_hand = /obj/item/storage/firstaid/regular
+	suit_store = /obj/item/device/flashlight/pen
+
+	backpack = /obj/item/storage/backpack/medic
+	satchel = /obj/item/storage/backpack/satchel/med
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+/*
+Chemist
+*/
+/datum/job/chemist
+	title = "Chemist"
+	flag = CHEMIST
+	department_head = list("Chief Medical Officer")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
+
+	outfit = /datum/outfit/job/chemist
+
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_CHEMISTRY, ACCESS_MINERAL_STOREROOM)
+
+/datum/outfit/job/chemist
+	name = "Chemist"
+	jobtype = /datum/job/chemist
+
+	glasses = /obj/item/clothing/glasses/science
+	belt = /obj/item/device/pda/chemist
+	ears = /obj/item/device/radio/headset/headset_med
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	backpack = /obj/item/storage/backpack/chemistry
+	satchel = /obj/item/storage/backpack/satchel/chem
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+/*
+Geneticist
+*/
+/datum/job/geneticist
+	title = "Geneticist"
+	flag = GENETICIST
+	department_head = list("Chief Medical Officer", "Research Director")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer and research director"
+	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
+
+	outfit = /datum/outfit/job/geneticist
+
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_ROBOTICS, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_RESEARCH)
+
+/datum/outfit/job/geneticist
+	name = "Geneticist"
+	jobtype = /datum/job/geneticist
+
+	belt = /obj/item/device/pda/geneticist
+	ears = /obj/item/device/radio/headset/headset_medsci
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit_store =  /obj/item/device/flashlight/pen
+
+	backpack = /obj/item/storage/backpack/genetics
+	satchel = /obj/item/storage/backpack/satchel/gen
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+/*
+Virologist
+*/
+/datum/job/virologist
+	title = "Virologist"
+	flag = VIROLOGIST
+	department_head = list("Chief Medical Officer")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	exp_type = EXP_TYPE_CREW
+	exp_requirements = 60
+
+	outfit = /datum/outfit/job/virologist
+
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_VIROLOGY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_VIROLOGY, ACCESS_MINERAL_STOREROOM)
+
+/datum/outfit/job/virologist
+	name = "Virologist"
+	jobtype = /datum/job/virologist
+
+	belt = /obj/item/device/pda/viro
+	ears = /obj/item/device/radio/headset/headset_med
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	mask = /obj/item/clothing/mask/surgical
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
+	suit_store =  /obj/item/device/flashlight/pen
+
+	backpack = /obj/item/storage/backpack/virology
+	satchel = /obj/item/storage/backpack/satchel/vir
+	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
+/*
+Research Director
+*/
+/datum/job/rd
+	title = "Research Director"
+	flag = RD_JF
+	department_head = list("Captain")
+	department_flag = MEDSCI
+	head_announce = list("Science")
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the captain"
+	selection_color = "#ffddff"
+	req_admin_notify = 1
+	minimal_player_age = 7
+	exp_type_department = EXP_TYPE_SCIENCE
+	exp_requirements = 180
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/rd
+
+	access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,
+			            ACCESS_TOX_STORAGE, ACCESS_TELEPORTER, ACCESS_SEC_DOORS,
+			            ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_AI_UPLOAD,
+			            ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM,
+			            ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
+	minimal_access = list(ACCESS_RD, ACCESS_HEADS, ACCESS_TOX, ACCESS_GENETICS, ACCESS_MORGUE,
+			            ACCESS_TOX_STORAGE, ACCESS_TELEPORTER, ACCESS_SEC_DOORS,
+			            ACCESS_RESEARCH, ACCESS_ROBOTICS, ACCESS_XENOBIOLOGY, ACCESS_AI_UPLOAD,
+			            ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MINERAL_STOREROOM,
+			            ACCESS_TECH_STORAGE, ACCESS_MINISAT, ACCESS_MAINT_TUNNELS, ACCESS_NETWORK)
+
+/datum/outfit/job/rd
+	name = "Research Director"
+	jobtype = /datum/job/rd
+
+	id = /obj/item/card/id/silver
+	belt = /obj/item/device/pda/heads/rd
+	ears = /obj/item/device/radio/headset/heads/rd
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_hand = /obj/item/clipboard
+	l_pocket = /obj/item/device/laser_pointer
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
+	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced=1)
+
+	backpack = /obj/item/storage/backpack/science
+	satchel = /obj/item/storage/backpack/satchel/tox
+
+/datum/outfit/job/rd/rig
+	name = "Research Director (Hardsuit)"
+
+	l_hand = null
+	mask = /obj/item/clothing/mask/breath
+	suit = /obj/item/clothing/suit/space/hardsuit/rd
+	suit_store = /obj/item/tank/internals/oxygen
+	internals_slot = slot_s_store
+
+/*
+Scientist
+*/
+/datum/job/scientist
+	title = "Scientist"
+	flag = SCIENTIST
+	department_head = list("Research Director")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 5
+	spawn_positions = 3
+	supervisors = "the research director"
+	selection_color = "#ffeeff"
+	exp_requirements = 60
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/scientist
+
+	access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM, ACCESS_TECH_STORAGE, ACCESS_GENETICS)
+	minimal_access = list(ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_RESEARCH, ACCESS_XENOBIOLOGY, ACCESS_MINERAL_STOREROOM)
+
+/datum/outfit/job/scientist
+	name = "Scientist"
+	jobtype = /datum/job/scientist
+
+	belt = /obj/item/device/pda/toxins
+	ears = /obj/item/device/radio/headset/headset_sci
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/toggle/labcoat/science
+
+	backpack = /obj/item/storage/backpack/science
+	satchel = /obj/item/storage/backpack/satchel/tox
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
+
+/*
+Roboticist
+*/
+/datum/job/roboticist
+	title = "Roboticist"
+	flag = ROBOTICIST
+	department_head = list("Research Director")
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "research director"
+	selection_color = "#ffeeff"
+	exp_requirements = 60
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/roboticist
+
+	access = list(ACCESS_ROBOTICS, ACCESS_TOX, ACCESS_TOX_STORAGE, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM, ACCESS_XENOBIOLOGY, ACCESS_GENETICS)
+	minimal_access = list(ACCESS_ROBOTICS, ACCESS_TECH_STORAGE, ACCESS_MORGUE, ACCESS_RESEARCH, ACCESS_MINERAL_STOREROOM)
+
+/datum/outfit/job/roboticist
+	name = "Roboticist"
+	jobtype = /datum/job/roboticist
+
+	belt = /obj/item/storage/belt/utility/full
+	l_pocket = /obj/item/device/pda/roboticist
+	ears = /obj/item/device/radio/headset/headset_sci
+	uniform = /obj/item/clothing/under/trek/medsci/next
+	suit = /obj/item/clothing/suit/toggle/labcoat
+
+	backpack = /obj/item/storage/backpack/science
+	satchel = /obj/item/storage/backpack/satchel/tox
+
+	pda_slot = slot_l_store
+
+
+//Warden and regular officers add this result to their get_access()
+/datum/job/proc/check_config_for_sec_maint()
+	if(CONFIG_GET(flag/security_has_maint_access))
+		return list(ACCESS_MAINT_TUNNELS)
+	return list()
+
+/*
+Head of Security
+*/
+/datum/job/hos
+	title = "Head of Security"
+	flag = HOS
+	department_head = list("Captain")
+	department_flag = ENGSEC
+	head_announce = list("Security")
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the captain"
+	selection_color = "#ffdddd"
+	req_admin_notify = 1
+	minimal_player_age = 14
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
+	exp_type_department = EXP_TYPE_SECURITY
+
+	outfit = /datum/outfit/job/hos
+
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS,
+			            ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MAINT_TUNNELS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS,
+			            ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_ALL_PERSONAL_LOCKERS,
+			            ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION, ACCESS_MAILSORTING,
+			            ACCESS_HEADS, ACCESS_HOS, ACCESS_RC_ANNOUNCE, ACCESS_KEYCARD_AUTH, ACCESS_GATEWAY, ACCESS_MAINT_TUNNELS)
+
+/datum/outfit/job/hos
+	name = "Head of Security"
+	jobtype = /datum/job/hos
+
+	id = /obj/item/card/id/silver
+	belt = /obj/item/device/pda/heads/hos
+	ears = /obj/item/device/radio/headset/heads/hos/alt
+	uniform = /obj/item/clothing/under/trek/engsec/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
+	gloves = /obj/item/clothing/gloves/color/black/hos
+	head = /obj/item/clothing/head/HoS/beret
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	suit_store = /obj/item/gun/energy/e_gun
+	r_pocket = /obj/item/device/assembly/flash/handheld
+	l_pocket = /obj/item/restraints/handcuffs
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)
+
+/*
+Warden
+*/
+/datum/job/warden
+	title = "Warden"
+	flag = WARDEN
+	department_head = list("Head of Security")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of security"
+	selection_color = "#ffeeee"
+	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/warden
+
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_WEAPONS) //SEE /DATUM/JOB/WARDEN/GET_ACCESS()
+
+/datum/job/warden/get_access()
+	var/list/L = list()
+	L = ..() | check_config_for_sec_maint()
+	return L
+
+/datum/outfit/job/warden
+	name = "Warden"
+	jobtype = /datum/job/warden
+
+	belt = /obj/item/device/pda/warden
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/trek/engsec/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/warden/alt
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/beret/sec
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	r_pocket = /obj/item/device/assembly/flash/handheld
+	l_pocket = /obj/item/restraints/handcuffs
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)
+
+
+/*
+Detective
+*/
+/datum/job/detective
+	title = "Detective"
+	flag = DETECTIVE
+	department_head = list("Head of Security")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of security"
+	selection_color = "#ffeeee"
+	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/detective
+
+	access = list(ACCESS_SEC_DOORS, ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_COURT, ACCESS_BRIG, ACCESS_WEAPONS)
+	minimal_access = list(ACCESS_SEC_DOORS, ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE, ACCESS_MAINT_TUNNELS, ACCESS_COURT, ACCESS_BRIG, ACCESS_WEAPONS)
+
+/datum/outfit/job/detective
+	name = "Detective"
+	jobtype = /datum/job/detective
+
+	belt = /obj/item/device/pda/detective
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/trek/engsec/next
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/det_suit
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/beret/sec
+	l_pocket = /obj/item/toy/crayon/white
+	r_pocket = /obj/item/lighter
+	backpack_contents = list(/obj/item/storage/box/evidence=1,\
+		/obj/item/device/detective_scanner=1,\
+		/obj/item/device/tricorder=1,\
+		/obj/item/melee/classic_baton=1)
+	mask = /obj/item/clothing/mask/cigarette
+
+	implants = list(/obj/item/implant/mindshield)
+
+/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
+	cig.light("")
+
+	if(visualsOnly)
+		return
+
+/*
+Security Officer
+*/
+/datum/job/officer
+	title = "Security Officer"
+	flag = OFFICER
+	department_head = list("Head of Security")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
+	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
+	supervisors = "the head of security, and the head of your assigned department (if applicable)"
+	selection_color = "#ffeeee"
+	minimal_player_age = 7
+	exp_requirements = 300
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/security
+
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_WEAPONS) //BUT SEE /DATUM/JOB/WARDEN/GET_ACCESS()
+
+
+/datum/job/officer/get_access()
+	var/list/L = list()
+	L |= ..() | check_config_for_sec_maint()
+	return L
+
+GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
+
+/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+	// Assign department security
+	var/department
+	if(M && M.client && M.client.prefs)
+		department = M.client.prefs.prefered_security_department
+		if(!LAZYLEN(GLOB.available_depts) || department == "None")
+			return
+		else if(department in GLOB.available_depts)
+			LAZYREMOVE(GLOB.available_depts, department)
+		else
+			department = pick_n_take(GLOB.available_depts)
+	var/ears = null
+	var/accessory = null
+	var/list/dep_access = null
+	var/destination = null
+	var/spawn_point = null
+	switch(department)
+		if(SEC_DEPT_SUPPLY)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
+			dep_access = list(ACCESS_MAILSORTING, ACCESS_MINING, ACCESS_MINING_STATION)
+			destination = /area/security/checkpoint/supply
+			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/cargo
+		if(SEC_DEPT_ENGINEERING)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
+			dep_access = list(ACCESS_CONSTRUCTION, ACCESS_ENGINE)
+			destination = /area/security/checkpoint/engineering
+			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/engine
+		if(SEC_DEPT_MEDICAL)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
+			dep_access = list(ACCESS_MEDICAL)
+			destination = /area/security/checkpoint/medical
+			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
+			accessory =  /obj/item/clothing/accessory/armband/medblue
+		if(SEC_DEPT_SCIENCE)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
+			dep_access = list(ACCESS_RESEARCH)
+			destination = /area/security/checkpoint/science
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/science
+
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		U.attach_accessory(new accessory)
+	if(ears)
+		if(H.ears)
+			qdel(H.ears)
+		H.equip_to_slot_or_del(new ears(H),slot_ears)
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access |= dep_access
+
+	var/teleport = 0
+	if(!CONFIG_GET(flag/sec_start_brig))
+		if(destination || spawn_point)
+			teleport = 1
+	if(teleport)
+		var/turf/T
+		if(spawn_point)
+			T = get_turf(spawn_point)
+			H.Move(T)
+		else
+			var/safety = 0
+			while(safety < 25)
+				T = safepick(get_area_turfs(destination))
+				if(T && !H.Move(T))
+					safety += 1
+					continue
+				else
+					break
+	if(department)
+		to_chat(M, "<b>You have been assigned to [department]!</b>")
+	else
+		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+
+
+
+/datum/outfit/job/security
+	name = "Security Officer"
+	jobtype = /datum/job/officer
+
+	belt = /obj/item/device/pda/security
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/trek/engsec/next
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/beret/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/device/assembly/flash/handheld
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)
+
+
+/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+	. = ..()
+	wires = new/datum/wires/radio(src)
+	secure_radio_connections = new
+	recalculateChannels()
+
+/obj/item/device/radio/headset/headset_sec/alt/department/engi
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+
+/obj/item/device/radio/headset/headset_sec/alt/department/supply
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+
+/obj/item/device/radio/headset/headset_sec/alt/department/med
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+
+/obj/item/device/radio/headset/headset_sec/alt/department/sci
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+
+//When adding new jobs, go to jobs.dm
+
+/datum/job/soldier
+	title = "Starfleet Infantry"
+	flag = SOLDIER
+	department_head = list("Admirals")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
+	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
+	supervisors = "anyone of a higher rank than yourself."
+	selection_color = "#ffeeee"
+	minimal_player_age = 3
+	exp_requirements = 100
+	exp_type = EXP_TYPE_CREW
+
+	outfit = /datum/outfit/job/soldier
+
+	access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
+	minimal_access = list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_COURT, ACCESS_WEAPONS) //BUT SEE /DATUM/JOB/WARDEN/GET_ACCESS()
+
+/datum/outfit/job/soldier
+	name = "Starfleet Infantry"
+	jobtype = /datum/job/soldier
+
+	belt = /obj/item/device/pda/security
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/trek/engsec/next
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/beret/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit_store = /obj/item/gun/energy/laser/retro //change this shit
+	backpack_contents = list(/obj/item/melee/baton/loaded=1,/obj/item/gun/energy/laser/retro=1,/obj/item/kitchen/knife/combat=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)

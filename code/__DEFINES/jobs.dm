@@ -13,6 +13,7 @@
 #define AI_JF				(1<<9)
 #define CYBORG			(1<<10)
 #define ADMIRAL			(1<<11)
+#define SOLDIER			(1<<12)
 
 
 #define MEDSCI			(1<<1)
