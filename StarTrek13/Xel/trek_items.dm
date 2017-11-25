@@ -67,6 +67,9 @@
 	doorDeni = 'StarTrek13/sound/borg/machines/tngchime.ogg'
 	boltDown = 'StarTrek13/sound/borg/machines/tngchime.ogg'
 	overlays_file = 'StarTrek13/icons/trek/door_trek.dmi'
+	layer = 4.5
+	open_door_layer = 4.5
+	closed_door_layer = CLOSED_DOOR_LAYER
 
 /obj/structure/fluff/warpcore
 	name = "warp core"
