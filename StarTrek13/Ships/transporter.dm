@@ -11,15 +11,6 @@
 	var/list/linked = list()
 	var/list/tricorders = list()
 
-/obj/machinery/computer/transporter_control/New()
-	. = ..()
-	link_to()
-
-/obj/machinery/computer/transporter_control/proc/link_to()
-	for(var/obj/machinery/trek/transporter/T in get_area(src))
-		src.linked += T
-		T.transporter_controller = src
-
 /obj/machinery/computer/transporter_control/proc/activate_pads(area/thearea)
 	for(var/obj/machinery/trek/transporter/T in linked)
 		T.teleport_target = thearea
@@ -97,12 +88,16 @@
 		if("cancel")
 			return
 
-/obj/machinery/computer/transporter_control/attackby(obj/I, mob/user)
+/obj/machinery/computer/transporter_control/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/tricorder))
-		if(!I in tricorders)
-			var/obj/item/device/tricorder/S = I
+		var/obj/item/device/tricorder/S = I
+		if(istype(S.buffer, /obj/machinery/trek/transporter))
+			linked += S.buffer
+			S.buffer = null
+			to_chat(user, "<span class='notice'>Transporter successfully connected to the console.</span>")
+		else if(!I in tricorders)
 			S.transporter_controller = src
-			tricorders += I
+			tricorders += S
 			user << "Successfully linked [I] to [src], you may now tag items for transportation"
 		else
 			user << "[I] is already linked to [src]!"
@@ -135,6 +130,12 @@
 	flick("alien-pad", src)
 	new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 	Warp(target)
+
+/obj/machinery/trek/transporter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/tricorder))
+		var/obj/item/device/tricorder/T = I
+		T.buffer = src
+		to_chat(user, "<span class='notice'>Transporter data successfully stored in the tricorders buffer.</span>")
 
 /*
 /obj/structure/trek/transporter

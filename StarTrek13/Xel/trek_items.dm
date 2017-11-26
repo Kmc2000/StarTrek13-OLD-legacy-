@@ -492,6 +492,7 @@
 	var/scannerstatus = HAS_SCANNER
 	var/obj/item/weapon/tricordscanner/tscanner
 	var/obj/machinery/computer/transporter_control/transporter_controller
+	var/obj/machinery/buffer
 
 /obj/item/device/tricorder/New()
 	..()
