@@ -196,7 +196,7 @@ Head of Personnel
 	id = /obj/item/card/id/silver
 	belt = /obj/item/device/pda/heads/hop
 	ears = /obj/item/device/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/head_of_personnel
+	uniform = /obj/item/clothing/under/trek/command/next
 	shoes = /obj/item/clothing/shoes/jackboots
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1,/obj/item/device/tricorder)

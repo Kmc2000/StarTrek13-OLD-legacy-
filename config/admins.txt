@@ -12,5 +12,6 @@ Kmc2000	= Host
 Cdey = Coder
 HeadyBucket = Coder
 MASMC = Administrator
-subdon = Lore Consultant
+subdon = LoreConsultant
 Kyrac = Administrator
+deadlantern = Moderator

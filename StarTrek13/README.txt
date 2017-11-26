@@ -11,5 +11,7 @@ Click.dm ~Kmc
 Trek.dm ~ Kmc (uniforms)
 Configs ~ Kmc
 Jobs.dm ~Kmc
+unary_devices.dmi ~Kmc (keek's scrubber sprites)
+doors/airlock.dm ~Kmc, perspective doors
 
 Thanks ~Kmc
