@@ -435,9 +435,9 @@
 				sleep(40)
 				detscan.attack_self(user)
 			if("transporter tag")
-				if(!I in transporter_controller.retrieveable)
+				if(!I in transporter_controller.retrievable)
 					to_chat(user,"[I] has been tagged for transportation and can now be beamed up")
-					transporter_controller.retrieveable += I
+					transporter_controller.retrievable += I
 				else
 					to_chat(user,"[I] has already been tagged for transportation.")
 			if("cancel")
