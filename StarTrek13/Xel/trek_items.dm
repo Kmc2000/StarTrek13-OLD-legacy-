@@ -82,6 +82,7 @@
 	layer = 4.5
 	var/cooldown2 = 115 //11.5 second cooldown
 	var/saved_time = 0
+	var/datum/looping_sound/trek/warp/soundloop
 
 /obj/structure/sign/trek
 	name = "ship markings"
@@ -97,12 +98,7 @@
 
 /obj/structure/fluff/warpcore/New()
 	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/fluff/warpcore/process()
-	if(world.time >= saved_time + cooldown2)
-		saved_time = world.time
-		playsound(src.loc, "StarTrek13/StarTrek13/sound/borg/machines/engihum.ogg", 200, 0, 4)
+	soundloop = new(list(src), TRUE)
 
 /obj/structure/fluff/helm
 	name = "helm control"
@@ -114,21 +110,32 @@
 	opacity = 0
 	layer = 4.5
 
+//////////////////////////////////////
+/datum/looping_sound/trek/bridge
+	start_sound = null
+	start_length = 10
+	mid_sounds = list('StarTrek13/sound/borg/machines/tng_bridge_2.ogg'=1)
+	mid_length = 163
+	end_sound = null
+	volume = 150
+
+/datum/looping_sound/trek/warp
+	start_sound = null
+	start_length = 10
+	mid_sounds = list('StarTrek13/sound/borg/machines/engihum.ogg'=1)
+	mid_length = 115
+	end_sound = null
+	volume = 115
 
 /obj/structure/fluff/helm/desk/noisy //makes star trek noises!
 	name = "captain's display"
 	desc = "An LCARS display showing all shipboard systems, status: NOMINAL"
-	var/cooldown2 = 163 //16 second cooldown
-	var/saved_time = 0
+	var/datum/looping_sound/trek/bridge/soundloop
 
 /obj/structure/fluff/helm/desk/noisy/New()
 	. = ..()
-	START_PROCESSING(SSobj, src)
+	soundloop = new(list(src), TRUE)
 
-/obj/structure/fluff/helm/desk/noisy/process()
-	if(world.time >= saved_time + cooldown2)
-		saved_time = world.time
-		playsound(src.loc, "StarTrek13/StarTrek13/sound/borg/machines/tng_bridge_2.ogg", 100, 0, 4)
 
 /obj/structure/sign/viewscreen
 	icon = 'StarTrek13/icons/borg/borg.dmi'
@@ -137,6 +144,10 @@
 	density = 0
 	layer = SIGN_LAYER
 	name = "viewscreen"
+
+/obj/structure/fluff/helm/desk/noisy/Destroy()
+	. = ..()
+	QDEL_NULL(soundloop)
 
 
 /obj/structure/sign/viewscreen/lcars
