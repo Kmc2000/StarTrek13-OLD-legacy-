@@ -29,6 +29,7 @@
 	var/atom/targetmeme = null //for testing
 	var/weapons_charge_time = 60 //6 seconds inbetween shots.
 	var/in_use1 = 0 //firing weapons?
+	var/initial_icon_state = "generic"
 
 /obj/structure/overmap/away/station
 	name = "space station 13"
@@ -51,6 +52,7 @@
 	name = "Ohno"
 	linked_ship = /area/ship/target
 	icon_state = "destroyer"
+	initial_icon_state = "destroyer"
 
 //So basically we're going to have ships that fly around in a box and shoot each other, i'll probably have the pilot mob possess the objects to fly them or something like that, otherwise I'll use cameras.
 
@@ -81,9 +83,12 @@
 	START_PROCESSING(SSobj,src)
 	linkto()
 	linked_ship = get_area(src)
+	var/list/thelist = list()
 	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
 		if(A.name == "ship_spawn")
-			forceMove(A.loc)
+			thelist += A
+	var/obj/effect/landmark/A = pick(thelist)
+	forceMove(A.loc)
 
 //obj/structure/overmap/ship/GrantActions(mob/living/user, human_occupant = 0)
 //	internals_action.Grant(user, src)
@@ -98,7 +103,6 @@
 /obj/structure/overmap/take_damage(amount,turf/target)
 	if(has_shields())
 		generator.take_damage(amount)//shields now handle the hit
-		say("ow fuck you")
 		return
 	else//no shields are up! take the hit
 		var/turf/theturf = get_turf(target)
@@ -118,8 +122,10 @@
 //	if(!generator || !generator.shields.len)
 	if(!theshield.density)
 		shields_active = 0
+		icon_state = initial_icon_state
 	else
 		shields_active = 1
+		icon_state = initial_icon_state + "-shield"
 	if(health <= 0)
 		destroy(1)
 	if(location())
@@ -203,6 +209,7 @@
 			in_use1 = 0
 			INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
 			return
+		in_use1 = 0 //testing
 	else
 		to_chat(user, "weapons still charging")
 		return
