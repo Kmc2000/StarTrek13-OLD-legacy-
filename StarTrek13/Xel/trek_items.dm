@@ -282,7 +282,7 @@
 	name = "Helm Control"
 	desc = "make it so."
 	shuttleId = "trekshuttle"
-	possible_destinations = "trek_custom_shuttle"
+	possible_destinations = "trekshuttlestarbase;trekshuttlecadaver"
 	icon = 'StarTrek13/icons/trek/star_trek.dmi'
 	icon_state = "helm"
 	anchored = TRUE
@@ -291,29 +291,6 @@
 	layer = 4.5
 	icon_keyboard = null
 	icon_screen = null
-
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/trek/shuttlepod
-	name = "Warp Beacon Console"
-	z_lock = 0
-	icon = 'StarTrek13/icons/trek/star_trek.dmi'
-	icon_state = "helm"
-	shuttleId = "trekshuttle"
-	shuttlePortId = "trek_custom_shuttle"
-	shuttlePortName = "shuttle warp beacon"
-	jumpto_ports = list("trekshuttlehome", "syndicate_ne", "syndicate_nw", "trek_custom", "syndicate_se", "syndicate_sw", "syndicate_s","whiteship_z4","whiteship_away","mining_away")
-	x_offset = 0
-	y_offset = 3
-	rotate_action = null
-	anchored = TRUE
-	density = 1
-	opacity = 0
-	layer = 4.5
-	icon_keyboard = null
-	icon_screen = null
-	rotate_action = null
-	dir = 8
-
 
 /obj/docking_port/mobile/trek/shuttlepod //aaaa
 	name = "shuttlepod 1"
@@ -333,6 +310,15 @@
 	blocks_air = 1
 	density = 0
 	opacity = 0
+
+/turf/closed/trekshield/CanPass(atom/movable/AM)
+	return 1
+
+/turf/closed/trekshield/CanAtmosPass()
+	if(density)
+		return 0
+	return 1
+
 /turf/closed/trekshield/attackby()
 	return 0
 

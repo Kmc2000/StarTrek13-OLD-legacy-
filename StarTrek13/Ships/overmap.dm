@@ -1,6 +1,8 @@
 
 //Movement system and upgraded ship combat!
 
+/area/overmap
+	name = "generic overmap area"
 
 #define TORPEDO_MODE 1//1309
 
@@ -30,17 +32,37 @@
 	var/weapons_charge_time = 60 //6 seconds inbetween shots.
 	var/in_use1 = 0 //firing weapons?
 	var/initial_icon_state = "generic"
+	var/obj/machinery/computer/transporter_control/transporter //linked transporter CONTROLLER
+	var/spawn_name = "ship_spawn"
+	var/spawn_random = 1
+	var/turf/initial_loc = null //where our pilot was standing upon entry
+	var/station = 0 // are we a station
+	var/notified = 1 //notify pilot of visitable structures
+
+/obj/structure/overmap/New()
+	. = ..()
+	START_PROCESSING(SSobj,src)
+	linkto()
+	linked_ship = get_area(src)
+	var/list/thelist = list()
+	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
+		if(A.name == spawn_name)
+			thelist += A
+	var/obj/effect/landmark/A = pick(thelist)
+	forceMove(A.loc)
+
+
+/obj/structure/overmap/proc/toggle_shields(mob/user)
+	generator.toggle(user)
 
 /obj/structure/overmap/away/station
 	name = "space station 13"
-	var/list/areaslist = list() //teleport to the station with this one, override this with custom areas to allow the transporter to beam people down!
-
-/obj/structure/overmap/away/station/New()
-	. = ..()
-	for(var/area/thearea in GLOB.teleportlocs)
-		if(!thearea in areaslist)
-			areaslist += thearea
-
+	icon = 'StarTrek13/icons/trek/large_overmap.dmi'
+	icon_state = "station"
+	spawn_random = 0
+	linked_ship = /area/overmap
+	station = 1
+	spawn_name = "station_spawn"
 
 /obj/structure/overmap/ship
 	name = "a space ship"
@@ -73,22 +95,23 @@
 /obj/structure/overmap/ship/Process_Spacemove(movement_dir = 0)
 	return 1 //add engines later
 
-/obj/structure/overmap/ship/attack_hand(mob/user)
+/obj/structure/overmap/proc/enter(mob/user)
 	to_chat(user, "you climb into [src]...somehow" )
+	initial_loc = user.loc
 	user.loc = src
 	pilot = user
+	pilot.status_flags |= GODMODE
 
-/obj/structure/overmap/New()
-	. = ..()
-	START_PROCESSING(SSobj,src)
-	linkto()
-	linked_ship = get_area(src)
-	var/list/thelist = list()
-	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
-		if(A.name == "ship_spawn")
-			thelist += A
-	var/obj/effect/landmark/A = pick(thelist)
-	forceMove(A.loc)
+/obj/structure/overmap/AltClick()
+	exit()
+
+/obj/structure/overmap/proc/exit(mob/user)
+	to_chat(pilot,"you have stopped controlling [src]")
+	pilot.forceMove(initial_loc)
+	initial_loc = null
+	pilot.status_flags -= GODMODE
+	pilot = null
+
 
 //obj/structure/overmap/ship/GrantActions(mob/living/user, human_occupant = 0)
 //	internals_action.Grant(user, src)
@@ -97,8 +120,11 @@
 /obj/structure/overmap/proc/linkto()	//weapons etc. don't link!
 	for(var/obj/structure/fluff/helm/desk/tactical/T in linked_ship)
 		weapons = T
+		T.theship = src
 	for(var/obj/machinery/space_battle/shield_generator/G in linked_ship)
 		generator = G
+	for(var/obj/machinery/computer/transporter_control/T in linked_ship)
+		transporter = T
 
 /obj/structure/overmap/take_damage(amount,turf/target)
 	if(has_shields())
@@ -114,8 +140,13 @@
 		playsound(src.loc, 'StarTrek13/sound/borg/machines/shiphit.ogg',100,0) //clang
 		return
 
+/obj/structure/overmap/proc/update_transporters(area/the_area)
+	transporter.destinations = list()
+	transporter.destinations += the_area
+
 /obj/structure/overmap/process()
 	linkto()
+	transporter.destinations = list() //so when we leave the area, it stops being transportable.
 	var/obj/effect/adv_shield/theshield = pick(generator.shields) //sample a random shield for health and stats.
 	shield_health = theshield.health
 	max_shield_health = theshield.maxhealth
@@ -129,10 +160,16 @@
 	if(health <= 0)
 		destroy(1)
 	if(location())
-		to_chat(pilot, "New visitable object near you")
+		notified = 1
+		if(!notified)
+			to_chat(pilot, "New visitable object near you")
+	else
+		notified = 0
+
 
 /obj/structure/overmap/proc/destroy(severity)
 	STOP_PROCESSING(SSobj,src)
+	exit()
 	switch(severity)
 		if(1)
 			//Here we will blow up the ship map as well, 0 is if you dont want to lag the server.
@@ -157,6 +194,7 @@
 		if(!istype(A))
 			return
 		interactables_near_ship += A
+		update_transporters(A.linked_ship)
 	if(interactables_near_ship.len > 0)
 		return 1
 	else//nope

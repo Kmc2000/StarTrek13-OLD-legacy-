@@ -127,13 +127,12 @@
 	for(var/obj/effect/landmark/shield/marker in thearea)
 		if(!marker in thearea)
 			return
-		if(marker.z == src.z)
-			var/obj/effect/adv_shield/shield = new(src)
-			shield.dir = marker.dir
-			shield.forceMove(get_turf(marker))
-			shield.generator = src
-			shield.icon_state = "shieldwalloff"
-			shields += shield
+		var/obj/effect/adv_shield/shield = new(src)
+		shield.dir = marker.dir
+		shield.forceMove(get_turf(marker))
+		shield.generator = src
+		shield.icon_state = "shieldwalloff"
+		shields += shield
 
 /obj/machinery/space_battle/shield_generator/take_damage(var/damage, damage_type = PHYSICAL)
 	src.say("Shield taking damage: [damage] : [damage_type == PHYSICAL ? "PHYSICAL" : "ENERGY"]")
@@ -598,9 +597,8 @@
 	else
 		src.say("No warp signatures detected")
 	for(var/obj/structure/fluff/helm/desk/tactical/T in thearea)
-		if(T.z == src.z)
-			if(!src in T.weapons)
-				T.weapons += src
+		if(!src in T.weapons)
+			T.weapons += src
 
 /obj/machinery/power/ship/phaser/proc/can_fire()
 	if(state == 1)
@@ -697,6 +695,7 @@
 	var/redalertsound
 	var/area/target_area = null
 	var/list/torpedoes = list()
+	var/obj/structure/overmap/theship = null
 
 /obj/structure/fluff/helm/desk/tactical/process()
 	var/area/thearea = get_area(src)
@@ -729,11 +728,9 @@
 	torpedoes = list()
 	var/area/thearea = get_area(src)
 	for(var/obj/machinery/power/ship/phaser/P in thearea)
-		if(P.z == src.z)
-			weapons += P
+		weapons += P
 	for(var/obj/structure/torpedo_launcher/T in thearea)
-		if(T.z == src.z)
-			torpedoes += T
+		torpedoes += T
 
 
 /obj/structure/fluff/helm/desk/tactical/attack_hand(mob/user)
@@ -748,19 +745,21 @@
 				if(AR == current)
 					shipareas -= AR.name
 					shipareas -= AR
-	var/mode = input("Tactical console.", "Do what?")in list("choose target", "fire phasers", "shield control", "red alert siren","fire torpedo")
+	var/mode = input("Tactical console.", "Do what?")in list("fly ship", "remove pilot", "shield control", "red alert siren","fire torpedo")
 	switch(mode)
 		if("choose target")
-			var/A
-			A = input("Area to fire on", "Tactical Control", A) as anything in shipareas
-			target_area = shipareas[A]
-			new_target()
-			for(var/obj/machinery/power/ship/phaser/P in weapons)
-				P.target = target
-			for(var/obj/structure/torpedo_launcher/T in torpedoes)
-				T.target = target
-		if("fire phasers")
-			fire_phasers(target, user)
+			theship.exit(user)
+		//	var/A
+	//		A = input("Area to fire on", "Tactical Control", A) as anything in shipareas
+	//		target_area = shipareas[A]
+	//		new_target()
+	//		for(var/obj/machinery/power/ship/phaser/P in weapons)
+	//			P.target = target
+	//		for(var/obj/structure/torpedo_launcher/T in torpedoes)
+	//			T.target = target
+		if("fly ship")
+			theship.enter(user)
+		//	fire_phasers(target, user)
 		if("shield control")
 			shieldgen.toggle(user)
 		if("red alert siren")
@@ -942,7 +941,7 @@ obj/structure/torpedo_launcher/proc/fire()
 	density = 0
 	can_be_unanchored = 0
 
-/obj/structure/fluff/ship/panel
+/obj/structure/fluff/ship/panel		//TO DO DIRECTIONS, TRY FOR(VAR/THISTYPE/P in GETLINE to area you want to go to, then update icon states?
 	name = "wall panel"
 	desc = "a wall mounted screen"
 	icon = 'StarTrek13/icons/trek/star_trek.dmi'

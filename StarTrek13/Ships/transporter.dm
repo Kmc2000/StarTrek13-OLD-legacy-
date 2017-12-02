@@ -10,17 +10,21 @@
 	var/list/retrievable = list()
 	var/list/linked = list()
 	var/list/tricorders = list()
+	var/area/destinations = list() //where can we go, relates to overmap.dm
+	var/turf/open/available_turfs = list()
+//	var/turf/open/teleport_target = null
 
-/obj/machinery/computer/transporter_control/proc/activate_pads(area/thearea)
+/obj/machinery/computer/transporter_control/proc/activate_pads(var/area/thearea)
 	for(var/obj/machinery/trek/transporter/T in linked)
-		T.teleport_target = thearea
+		T.teleport_target = pick(available_turfs)
 		T.Send()
 
 /obj/machinery/computer/transporter_control/proc/get_available_turfs(var/area/A)
-	if(!A)
-		return
-	var/list/available_turfs = list()
-	for(var/turf/T in get_area_turfs(A.type))
+	available_turfs = list()
+	for(var/turf/open/T in A)
+		available_turfs += T
+		to_chat(world, "a turf has been added aaa TEEEEESST")
+	/*
 		if(!T.density)
 			var/clear = 1
 			for(var/obj/O in T)
@@ -29,6 +33,7 @@
 					break
 			if(clear)
 				available_turfs += T
+*/
 
 
 /obj/machinery/computer/transporter_control/attack_hand(mob/user)
@@ -37,36 +42,20 @@
 	B = input(user, "Mode:","Transporter Control",B) in list("send object","retrieve away team member", "cancel")
 	switch(B)
 		if("send object")
-			A = input(user, "Target", "Transporter Control", A) as null|anything in GLOB.teleportlocs
-			playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-			var/area/thearea = GLOB.teleportlocs[A]
-			if(!thearea)
-				return
-			for(var/obj/machinery/trek/transporter/T in linked)
-				for(var/mob/M in T.loc)
-					retrievable += M
-			/*playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-			var/list/L = list()
-			for(var/turf/T in get_area_turfs(thearea.type))
-				if(!T.density)
-					var/clear = 1
-					for(var/obj/O in T)
-						if(O.density)
-							clear = 0
-							break						ravioli ravioli what is this spaghetti codey
-					if(clear)
-						L+=T
-			if(!L || !L.len)
-				usr << "No area available."
-			var/list/available_turfs = get_available_turfs(GLOB.teleportlocs[A])
-			if(!available_turfs || !available_turfs.len)
-				usr << "No area available."
-			else*/
-			activate_pads(thearea)
-
-                        //                T.icon_state = "transporter" //erroroneus meme!
-                                //        playsound(src.loc, 'StarTrek13/sound/borg/machinesalert2.ogg', 40, 4)
-                                //        user << "Transport pattern buffer initialization failure."
+			if(linked.len)
+				A = input(user, "Target", "Transporter Control", A) as null|anything in destinations //activate_pads works here!
+				A = destinations[A]
+				if(!A)
+					A = pick(destinations)
+				var/area/thearea = A //problem
+				playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
+				get_available_turfs(thearea)
+				activate_pads(thearea)
+				for(var/obj/machinery/trek/transporter/T in linked)
+					for(var/mob/M in T.loc)
+						retrievable += M
+			else
+				to_chat(user, "<span class='notice'>There are no linked transporter pads</span>")
 		if("retrieve away team member")
 			var/C = input(user, "Beam someone back", "Transporter Control") as anything in retrievable
 			if(!C in retrievable)
@@ -112,7 +101,7 @@
 	icon = 'StarTrek13/icons/trek/star_trek.dmi'
 	icon_state = "transporter"
 	anchored = TRUE
-	var/turf/teleport_target
+	var/turf/open/teleport_target = null
 	var/obj/machinery/computer/transporter_control/transporter_controller = null
 
 /obj/machinery/trek/transporter/proc/Warp(mob/living/target)
@@ -120,8 +109,8 @@
 		target.forceMove(get_turf(src))
 
 /obj/machinery/trek/transporter/proc/Send()
-	if(teleport_target == null)
-		teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
+//	if(teleport_target == null)
+	//	teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
 	flick("alien-pad", src)
 	for(var/mob/living/target in loc)
 		target.forceMove(teleport_target)
@@ -135,7 +124,7 @@
 	if(istype(I, /obj/item/device/tricorder))
 		var/obj/item/device/tricorder/T = I
 		T.buffer = src
-		to_chat(user, "<span class='notice'>Transporter data successfully stored in the tricorders buffer.</span>")
+		to_chat(user, "<span class='notice'>Transporter data successfully stored in the tricorder buffer.</span>")
 
 /*
 /obj/structure/trek/transporter
