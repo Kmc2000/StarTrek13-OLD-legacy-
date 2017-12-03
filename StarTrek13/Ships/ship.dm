@@ -46,50 +46,61 @@
 	var/flux = 1
 	var/heat = 0
 	var/regen = 0
+	var/obj/structure/overmap/ship = null
 
-/obj/machinery/machinemachine
-	name = "machine machine broke"
-	icon = 'StarTrek13/icons/trek/star_trek.dmi'
-	icon_state = "ecm"
-	density = 1
-	var/health = 1050 //charge them up
-	var/maxhealth = 20000
-	var/flux_rate = 100
-	var/flux = 1
-	var/heat = 0
-	var/regen = 0
-/obj/machinery/machinemachine/attack_hand()
-//	to_chat(world, "regen rate[regen]")
-//	to_chat(world, "maxhealth: [maxhealth]")
-//	to_chat(world, "health: [health]")
-//	to_chat(world, "heat: [heat]")
-	calculate()
 
-/obj/machinery/machinemachine/proc/calculate()
+/obj/machinery/space_battle/shield_generator/proc/calculate()
+	for(var/obj/effect/adv_shield/S in shields)
+		S.health += regen
+	//	if(S.health >= maxhealth)
+		//	S.health = maxhealth
+
+/obj/machinery/space_battle/shield_generator/process()
 	flux_rate = flux*100
 	regen = (flux*flux_rate)
-	//heat += 50
-	health += regen
-//	to_chat(world, "calculating:")
-//	to_chat(world, "regen rate[regen]")
-//	to_chat(world, "maxhealth: [maxhealth]")
-//	to_chat(world, "health: [health]")
-//	to_chat(world, "heat: [heat]")
-	if(health >= maxhealth)
-		regen += (flux*flux_rate)
-/obj/machinery/machinemachine/AltClick()
-	to_chat(world, "damage! heat at:[heat]")
-	health -= 500
+	for(var/obj/effect/adv_shield/S in shields)
+		if(S.active)
+			S.regen = regen
+	var/obj/effect/adv_shield/S = pick(shields)
+	if(S.active && !S.density) //Active means the shieldgen is turning  it on, if it's not active the shieldgen cut it off
+		if(S.health <= 2000) //once they go down, they must charge back up a bit
+			for(var/obj/effect/adv_shield/A in shields)
+				A.health += 50 //slowly recharge
+				ship.shields_active = 0
+		else //problem here
+			for(var/obj/effect/adv_shield/A in shields)
+				A.activate()
+				ship.shields_active = 1
+	if(S.active) //we are active
+		ship.shields_active = 1
+		if(S.health < S.maxhealth)
+			for(var/obj/effect/adv_shield/A in shields)
+				A.health += regen
+		//	health += regen
+		else
+			return
+		if(S.health <= 0)
+			for(var/obj/effect/adv_shield/A in shields)
+				A.health = 0
+				ship.shields_active = 0
+				A.deactivate()
+	else if(!S.active)
+		for(var/obj/effect/adv_shield/A in shields)
+			A.deactivate()
+//	calculate()
 
-/obj/machinery/machinemachine/CtrlClick()
-	to_chat(world, "reset!")
-	health = 1050 //charge them up
-	maxhealth = 20000
-	flux_rate = 50
-	flux = 1
-	heat = 0
-	regen = 0
-
+/obj/effect/adv_shield/proc/percentage(damage)
+	var/counter
+	var/percent = health
+//	for(var/obj/effect/adv_shield/S in generator.shields)
+//		percent += S.health
+//		maxhealth += maxhealth
+	counter = maxhealth
+	percent = percent/counter
+	percent = percent*100
+	generator.say("Shields are buckling, absorbed: [damage]: Shields at [percent]%")
+	playsound(src.loc, 'StarTrek13/sound/borg/machines/bleep2.ogg', 100,1)
+	return
 
 /obj/machinery/space_battle/shield_generator/attack_hand(mob/user)
 	toggle(user)
@@ -101,6 +112,7 @@
 		for(var/obj/effect/adv_shield/S in shields)
 			S.deactivate()
 			S.active = 0
+			ship.shields_active = 0
 		return
 	if(!on)
 		var/sample
@@ -112,6 +124,7 @@
 			for(var/obj/effect/adv_shield/S in shields)
 				S.activate()
 				S.active = 1
+				ship.shields_active = 1
 			return
 		else
 			on = 0
@@ -150,12 +163,6 @@
 	return 1
 
 
-/obj/machinery/space_battle/shield_generator/process()
-	flux_rate = flux*100
-	regen = (flux*flux_rate)
-	for(var/obj/effect/adv_shield/S in shields)
-		if(S.active)
-			S.regen = regen
 		//S.calculate()
 //	to_chat(world, "calculating:")
 //	to_chat(world, "regen rate[regen]")
@@ -219,44 +226,6 @@
 	//	STOP_PROCESSING(SSobj,src)
 	else
 		return
-
-/obj/effect/adv_shield/proc/calculate()
-	for(var/obj/effect/adv_shield/S in generator.shields)
-		S.health += regen
-	//	if(S.health >= maxhealth)
-		//	S.health = maxhealth
-
-/obj/effect/adv_shield/process()
-	if(active && !density) //Active means the shieldgen is turning  it on, if it's not active the shieldgen cut it off
-		if(health <= 1000) //once they go down, they must charge back up a bit
-			health += 50 //slowly recharge
-		else //problem here
-			activate()
-	if(active) //we are active
-		if(health < maxhealth)
-			health += regen
-		//	health += regen
-		else
-			return
-		if(health <= 0)
-			health = 0
-			return deactivate()
-	else if(!active)
-		return deactivate()
-//	calculate()
-
-/obj/effect/adv_shield/proc/percentage(damage)
-	var/counter
-	var/percent = health
-//	for(var/obj/effect/adv_shield/S in generator.shields)
-//		percent += S.health
-//		maxhealth += maxhealth
-	counter = maxhealth
-	percent = percent/counter
-	percent = percent*100
-	generator.say("Shields are buckling, absorbed: [damage]: Shields at [percent]%")
-	playsound(src.loc, 'StarTrek13/sound/borg/machines/bleep2.ogg', 100,1)
-	return
 
 /obj/effect/adv_shield/ex_act(severity)
 	var/damage = 300*severity
@@ -787,7 +756,8 @@
 		to_chat(user, "ERROR, no target selected")
 
 /obj/structure/fluff/helm/desk/tactical/proc/fire_torpedo(atom/target,mob/user)
-	new_target()
+	if(!target)
+		new_target()
 	for(var/obj/structure/torpedo_launcher/T in torpedoes)
 		src.say("firing torpedoes at [target_area.name]")
 		T.target = target

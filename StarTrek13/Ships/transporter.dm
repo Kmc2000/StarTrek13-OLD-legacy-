@@ -14,7 +14,7 @@
 	var/turf/open/available_turfs = list()
 //	var/turf/open/teleport_target = null
 
-/obj/machinery/computer/transporter_control/proc/activate_pads(var/area/thearea)
+/obj/machinery/computer/transporter_control/proc/activate_pads()
 	for(var/obj/machinery/trek/transporter/T in linked)
 		T.teleport_target = pick(available_turfs)
 		T.Send()
@@ -23,17 +23,6 @@
 	available_turfs = list()
 	for(var/turf/open/T in A)
 		available_turfs += T
-		to_chat(world, "a turf has been added aaa TEEEEESST")
-	/*
-		if(!T.density)
-			var/clear = 1
-			for(var/obj/O in T)
-				if(O.density)
-					clear = 0
-					break
-			if(clear)
-				available_turfs += T
-*/
 
 
 /obj/machinery/computer/transporter_control/attack_hand(mob/user)
@@ -47,10 +36,10 @@
 				A = destinations[A]
 				if(!A)
 					A = pick(destinations)
-				var/area/thearea = A //problem
+			//	var/area/thearea = A //problem
 				playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-				get_available_turfs(thearea)
-				activate_pads(thearea)
+			//	get_available_turfs(thearea)
+				activate_pads()
 				for(var/obj/machinery/trek/transporter/T in linked)
 					for(var/mob/M in T.loc)
 						retrievable += M

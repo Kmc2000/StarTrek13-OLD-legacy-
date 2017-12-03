@@ -1,10 +1,34 @@
 
 //Movement system and upgraded ship combat!
 
+//	face_atom(A)//////
+
 /area/overmap
 	name = "generic overmap area"
 
+/area/overmap/starbase
+	name = "starbase 59"
+
+/obj/effect/landmark/transport_zone
+	name = "transport zone marker"
+
+/area/ship/transport_zone
+	name = "starbase 59 transport beacon" //So you put a small area like this around where people will transport to, then place a transporter marker there ^, this will become where people beam to
+	var/marker = "starbase"
+
+/area/ship/transport_zone/cadaver
+	name = "USS Cadaver transport beacon"
+	marker = "cadaver"
+
+/area/ship/transport_zone/adminbus
+	name = "USS adminbus transport beacon"
+	marker = "adminbus"
+
+/area/ship/transport_zone/ss13
+	name = "NT ss13 transport beacon"
+	marker = "ss13"
 #define TORPEDO_MODE 1//1309
+#define PHASER_MODE 2
 
 /obj/structure/overmap
 	name = "generic structure"
@@ -27,7 +51,7 @@
 	var/next_vehicle_move = 0 //used for move delays
 	var/vehicle_move_delay = 4 //tick delay between movements, lower = faster, higher = slower
 	var/mode = 0 //add in two modes ty
-	var/damage = 600 //standard damage for phasers, this will tank shields really quickly though so be warned!
+	var/damage = 800 //standard damage for phasers, this will tank shields really quickly though so be warned!
 	var/atom/targetmeme = null //for testing
 	var/weapons_charge_time = 60 //6 seconds inbetween shots.
 	var/in_use1 = 0 //firing weapons?
@@ -38,6 +62,11 @@
 	var/turf/initial_loc = null //where our pilot was standing upon entry
 	var/station = 0 // are we a station
 	var/notified = 1 //notify pilot of visitable structures
+	var/recharge = 0 //
+	var/recharge_max = 1.4 //not quite spam, but not prohibitive either
+	var/sensor_range = 10 //radius in which ships can be beamed to, amongst other things
+	var/area/transport_zone = null
+	var/marker = "cadaver"
 
 /obj/structure/overmap/New()
 	. = ..()
@@ -48,8 +77,12 @@
 	for(var/obj/effect/landmark/A in GLOB.landmarks_list)
 		if(A.name == spawn_name)
 			thelist += A
+			continue
+//	for(var/obj/effect/landmark/transport_zone/T in world)
+	//	transport_zone = get_area(T)
 	var/obj/effect/landmark/A = pick(thelist)
-	forceMove(A.loc)
+	var/turf/theloc = get_turf(A)
+	forceMove(theloc)
 
 
 /obj/structure/overmap/proc/toggle_shields(mob/user)
@@ -63,11 +96,19 @@
 	linked_ship = /area/overmap
 	station = 1
 	spawn_name = "station_spawn"
+	initial_icon_state = "station"
+	marker = "ss13"
+
+/obj/structure/overmap/away/station/starbase
+	name = "starbase59"
+	spawn_name = "starbase_spawn"
+	marker = "starbase"
 
 /obj/structure/overmap/ship
 	name = "a space ship"
 	icon = 'StarTrek13/icons/trek/overmap_ships.dmi'
 	icon_state = "generic"
+	marker = "cadaver"
 
 
 /obj/structure/overmap/ship/target //dummy for testing woo
@@ -75,6 +116,7 @@
 	linked_ship = /area/ship/target
 	icon_state = "destroyer"
 	initial_icon_state = "destroyer"
+	marker = "adminbus"
 
 //So basically we're going to have ships that fly around in a box and shoot each other, i'll probably have the pilot mob possess the objects to fly them or something like that, otherwise I'll use cameras.
 
@@ -123,14 +165,19 @@
 		T.theship = src
 	for(var/obj/machinery/space_battle/shield_generator/G in linked_ship)
 		generator = G
+		G.ship = src
 	for(var/obj/machinery/computer/transporter_control/T in linked_ship)
 		transporter = T
 
 /obj/structure/overmap/take_damage(amount,turf/target)
 	if(has_shields())
 		generator.take_damage(amount)//shields now handle the hit
+		var/datum/effect_system/spark_spread/s = new
+		s.set_up(2, 1, src)
+		s.start() //make a better overlay effect or something, this is for testing
 		return
 	else//no shields are up! take the hit
+		icon_state = initial_icon_state
 		var/turf/theturf = get_turf(target)
 		explosion(theturf,2,5,11)
 		var/datum/effect_system/spark_spread/s = new
@@ -140,32 +187,68 @@
 		playsound(src.loc, 'StarTrek13/sound/borg/machines/shiphit.ogg',100,0) //clang
 		return
 
-/obj/structure/overmap/proc/update_transporters(area/the_area)
-	transporter.destinations = list()
-	transporter.destinations += the_area
+/obj/structure/overmap/proc/update_transporters(obj/structure/overmap/OM)
+	if(!OM.has_shields())	//only when their shields are down
+		transporter.destinations = list()
+		transporter.destinations += OM.linked_ship
+		transporter.available_turfs = list()
+		var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
+		var/A = pick(thelist)
+		var/turf/open/theturf = get_turf(A)
+		transporter.available_turfs = theturf
+	else
+		transporter.destinations = list()
+
+/obj/structure/overmap/CtrlClick(mob/user)
+	if(pilot == user) //don't change the firing mode of enemy ships etc.
+		if(mode != TORPEDO_MODE)
+			mode = TORPEDO_MODE
+			to_chat(pilot, "switched to torpedo firing mode")
+		else
+			mode = PHASER_MODE
+			to_chat(pilot, "switched to phaser firing mode")
 
 /obj/structure/overmap/process()
+	recharge --
 	linkto()
-	transporter.destinations = list() //so when we leave the area, it stops being transportable.
+	location()
+	get_interactibles()
+	//transporter.destinations = list() //so when we leave the area, it stops being transportable.
 	var/obj/effect/adv_shield/theshield = pick(generator.shields) //sample a random shield for health and stats.
 	shield_health = theshield.health
 	max_shield_health = theshield.maxhealth
 //	if(!generator || !generator.shields.len)
-	if(!theshield.density)
-		shields_active = 0
-		icon_state = initial_icon_state
-	else
+	if(has_shields())
 		shields_active = 1
 		icon_state = initial_icon_state + "-shield"
+	else
+		shields_active = 0
+		icon_state = initial_icon_state
 	if(health <= 0)
 		destroy(1)
-	if(location())
-		notified = 1
-		if(!notified)
-			to_chat(pilot, "New visitable object near you")
-	else
-		notified = 0
+	//	transporter.destinations = list()
+	if(pilot.loc != src)
+		exit() //pilot has been tele'd out, remove them!
+/obj/structure/overmap/proc/get_interactibles()
+	for(var/obj/structure/overmap/OM in interactables_near_ship)
+		if(OM.shields_active == 0) //its shields are down
+			update_transporters(OM)
+			return 1
+		else
+			return 0
 
+/obj/structure/overmap/proc/location() //OK we're using areas for this so that we can have the ship be within an N tile range of an object
+//	var/area/thearea = get_area(src)
+	interactables_near_ship = list()
+	for(var/obj/structure/overmap/A in orange(sensor_range,src))
+		if(!istype(A))
+			return
+		interactables_near_ship += A
+	if(interactables_near_ship.len > 0)
+		return 1
+	else//nope
+		transporter.destinations = list()
+		return 0
 
 /obj/structure/overmap/proc/destroy(severity)
 	STOP_PROCESSING(SSobj,src)
@@ -179,7 +262,7 @@
 			qdel(src)
 
 /obj/structure/overmap/proc/has_shields()
-	if(shield_health > 1000 && shields_active)
+	if(shield_health > 2000 && shields_active)
 		return 1
 	else//no
 		return 0
@@ -187,18 +270,6 @@
 /obj/structure/overmap/bullet_act(var/obj/item/projectile/P)
 	. = ..()
 	take_damage(P.damage)
-
-/obj/structure/overmap/proc/location() //OK we're using areas for this so that we can have the ship be within an N tile range of an object
-	var/area/thearea = get_area(src)
-	for(var/obj/structure/overmap/away/A in thearea)
-		if(!istype(A))
-			return
-		interactables_near_ship += A
-		update_transporters(A.linked_ship)
-	if(interactables_near_ship.len > 0)
-		return 1
-	else//nope
-		return 0
 
 /obj/structure/overmap/ship/starfleet
 	name = "USS Cadaver"
@@ -228,34 +299,37 @@
 
 
 /obj/structure/overmap/proc/fire(atom/target,mob/user)
-	if(!in_use1)
-		to_chat(user, "charging phasers")
+	if(recharge <= 0)
+		recharge = recharge_max //-1 per tick
 		in_use1 = 1
-		if(do_after(user, weapons_charge_time, target = target))
-			in_use1 = 1
-			var/source = get_turf(src)
-			targetmeme = target
-			var/obj/structure/overmap/S = target
-			current_beam = new(source, target,time=30,beam_icon_state="phaserbeam",maxdistance=5000,btype=/obj/effect/ebeam/phaser)
-			var/list/L = list()
-			var/area/thearea = S.linked_ship
-			for(var/turf/T in get_area_turfs(thearea.type))
-				L+=T
-			var/location = pick(L)
-			var/turf/theturf = get_turf(location)
-			S.take_damage(damage,theturf)
-			in_use1 = 0
-			INVOKE_ASYNC(current_beam, /datum/beam.proc/Start)
-			return
-		in_use1 = 0 //testing
+		var/source = get_turf(src)
+		targetmeme = target
+		var/obj/structure/overmap/S = target
+		current_beam = new(source, target,time=30,beam_icon_state="phaserbeam",maxdistance=5000,btype=/obj/effect/ebeam/phaser)
+		var/list/L = list()
+		var/area/thearea = S.linked_ship
+		for(var/turf/T in get_area_turfs(thearea.type))
+			L+=T
+		var/location = pick(L)
+		var/turf/theturf = get_turf(location)
+		S.take_damage(damage,theturf)
+		in_use1 = 0
+		current_beam.Start()
+		var/list/soundlist = list('StarTrek13/sound/borg/machines/phaser.ogg','StarTrek13/sound/borg/machines/phaser2.ogg','StarTrek13/sound/borg/machines/phaser3.ogg')
+		var/chosen_sound = pick(soundlist)
+		SEND_SOUND(pilot, sound(chosen_sound))
+		SEND_SOUND(S.pilot, sound('StarTrek13/sound/borg/machines/alert1.ogg'))
+		return
 	else
-		to_chat(user, "weapons still charging")
+		to_chat(user, "Weapons still charging")
 		return
 
-/obj/structure/overmap/proc/fire_torpedo(atom/target,mob/user)
-	var/obj/structure/overmap/S = target
-	weapons.target = S.linked_ship
-	weapons.fire_phasers(target,user)
-
+/obj/structure/overmap/proc/fire_torpedo(obj/structure/overmap/OM)
+	var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
+	var/fuck = pick(thelist)
+	var/turf/theturf = get_turf(fuck)
+	weapons.fire_torpedo(theturf, pilot)
+	SEND_SOUND(pilot, sound('StarTrek13/sound/borg/machines/torpedo1.ogg'))
 
 #undef TORPEDO_MODE
+#undef PHASER_MODE
