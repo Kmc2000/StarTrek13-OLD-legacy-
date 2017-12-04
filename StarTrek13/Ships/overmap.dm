@@ -138,7 +138,10 @@
 	return 1 //add engines later
 
 /obj/structure/overmap/proc/enter(mob/user)
-	to_chat(user, "you climb into [src]...somehow" )
+	if(pilot)
+		to_chat(user, "you kick [pilot] off the ship controls!")
+		exit()
+		return 0
 	initial_loc = user.loc
 	user.loc = src
 	pilot = user

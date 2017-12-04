@@ -18,6 +18,7 @@
 #include "_maps\map_files\StarTrek13\overmap.dmm"
 #include "_maps\map_files\StarTrek13\ship\capital_class1.dmm"
 #include "_maps\map_files\StarTrek13\ship\frigate1.dmm"
+#include "_maps\map_files\StarTrek13\ship\small_nanotrasen_scout.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"

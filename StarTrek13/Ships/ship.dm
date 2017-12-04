@@ -9,6 +9,12 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	CanAtmosPass = 0
 
+/obj/structure/window/trek/steel
+	name = "steel plated window"
+	desc = "A window, how dull and grey."
+	icon = 'StarTrek13/icons/trek/NT_trek_wall.dmi'
+
+
 /obj/structure/window/trek/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
@@ -616,6 +622,11 @@
 	icon_state = "ship"
 
 
+/area/ship/nanotrasen
+	name = "NSV Muffin"
+	icon_state = "ship"
+
+
 
 
 /obj/ship_marker
@@ -665,6 +676,13 @@
 	var/area/target_area = null
 	var/list/torpedoes = list()
 	var/obj/structure/overmap/theship = null
+
+/obj/structure/fluff/helm/desk/tactical/nanotrasen
+	name = "tactical"
+	desc = "Used to control all ship functions...this one looks slightly retro."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "computer"
+
 
 /obj/structure/fluff/helm/desk/tactical/process()
 	var/area/thearea = get_area(src)
@@ -984,7 +1002,15 @@ obj/structure/torpedo_launcher/proc/fire()
 	icon = 'StarTrek13/icons/trek/trek_wall.dmi'
 	icon_state = "wall"
 	smooth = 1
-	canSmoothWith = list(/turf/closed/wall/ship,/obj/machinery/door/airlock/trek, /obj/structure/window, /obj/structure/window/trek, /turf/closed/wall/ship/light,/turf/closed/wall/ship/light/m)
+	canSmoothWith = list(/turf/closed/wall/ship,/obj/machinery/door/airlock/trek, /obj/structure/window, /obj/structure/window/trek, /turf/closed/wall/ship/light,/turf/closed/wall/ship/light/m,/turf/closed/wall/ship/steel,/obj/structure/window/trek/steel)
+
+
+/turf/closed/wall/ship/steel
+	name = "steel hull"
+	desc = "a more dull and grey ship hull, how boring..."
+	icon = 'StarTrek13/icons/trek/NT_trek_wall.dmi'
+	icon_state = "wall"
+	smooth = 1
 
 /turf/closed/wall/ship/light
 	name = "hull"
