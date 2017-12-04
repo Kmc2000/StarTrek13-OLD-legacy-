@@ -24,6 +24,7 @@
 	var/area_type
 	var/turf_type
 	var/baseturf_type
+	var/do_not_rotate = 0
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -520,7 +521,7 @@
 
 	// The baseturf that the gets assigned to the turf_type above
 	var/underlying_baseturf_type = /turf/open/space
-	
+
 	// The area that gets placed under where the shuttle moved from
 	var/underlying_area_type = /area/space
 
@@ -555,15 +556,16 @@
 		underlying_old_area = new underlying_area_type(null)
 
 	var/rotation = 0
-	if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
-		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
-		if ((rotation % 90) != 0)
-			rotation += (rotation % 90) //diagonal rotations not allowed, round up
-		rotation = SimplifyDegrees(rotation)
+	if(!do_not_rotate)//testing
+		if(new_dock.dir != dir) //Even when the dirs are the same rotation is coming out as not 0 for some reason
+			rotation = dir2angle(new_dock.dir)-dir2angle(dir)
+			if ((rotation % 90) != 0)
+				rotation += (rotation % 90) //diagonal rotations not allowed, round up
+			rotation = SimplifyDegrees(rotation)
 
-	if(!movement_direction)
-		movement_direction = turn(preferred_direction, 180)
-
+		if(!movement_direction)
+			movement_direction = turn(preferred_direction, 180)
+	movement_direction = 0
 	remove_ripples()
 
 	var/list/moved_atoms = list() //Everything not a turf that gets moved in the shuttle
@@ -572,7 +574,7 @@
 	CHECK_TICK
 
 	/****************************************All beforeShuttleMove procs*****************************************/
-	
+
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
@@ -613,10 +615,10 @@
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src)	//atoms
 				moved_atoms += moving_atom
-		
+
 		if(move_mode & MOVE_TURF)
 			oldT.onShuttleMove(newT, movement_force, movement_direction)									//turfs
-		
+
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area)										//areas

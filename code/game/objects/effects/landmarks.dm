@@ -36,6 +36,12 @@
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
 
+/obj/effect/landmark/start/admiral
+	name = "Admiral"
+
+/obj/effect/landmark/start/aide
+	name = "Aide"
+
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
 
