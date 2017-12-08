@@ -60,7 +60,7 @@
 "bh" = (/obj/structure/chair/office/dark{dir = 1},/turf/open/floor/borg/trek/light,/area/ship/target)
 "bi" = (/obj/structure/rack,/turf/open/floor/borg/trek/light,/area/ship/target)
 "bj" = (/obj/structure/fluff/helm/desk/tactical{dir = 8},/turf/open/floor/borg/trek/red,/area/ship/target)
-"bk" = (/obj/structure/fluff/helm/desk/noisy{dir = 8},/turf/open/floor/borg/trek/red,/area/ship/target)
+"bk" = (/obj/structure/fluff/helm/desk/noisy{dir = 8},/turf/open/floor/borg/trek/light,/area/ship/target)
 "bl" = (/obj/machinery/shieldgen/wallmounted,/turf/closed/wall/ship,/area/ship/target)
 "bm" = (/obj/structure/torpedo_launcher,/turf/open/floor/engine,/area/ship/target)
 "bn" = (/obj/machinery/light{dir = 8},/turf/open/floor/borg/trek/blue,/area/ship/target)
@@ -129,6 +129,7 @@
 "cy" = (/turf/open/floor/borg/trek/light,/area/ship/transport_zone/adminbus)
 "cz" = (/turf/open/floor/borg/trek/blue,/area/ship/transport_zone/adminbus)
 "cA" = (/obj/effect/landmark/transport_zone,/turf/open/floor/borg/trek/blue,/area/ship/transport_zone/adminbus)
+"cB" = (/obj/machinery/computer/shipcomms{dir = 4; icon_state = "computer"; ship_name = "USS Entax"},/turf/open/floor/borg/trek/red,/area/ship/target)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -145,8 +146,8 @@ abacacacacacacacacacaeayazaiawaxaxaxaxaxczcAczaxaxaxaxaxaxaxaxaxaAaiaBaCaiaiacab
 abadadadadadadaeaeaeaeaiaiaiawaxawawawawcyczcyawawawaxawawawawaxaDawaEawawaFacab
 abadadadaeaeaeaeaiaiaiaGaiaiaCaHaiaiaiaiaiaqaiaiaiaIaJaKaLaMaMaMaiaNaOaPawaFacab
 abadadadaeaeaeaeaiaQaRawawawawawaSaiaTajaAaxawaiawaiakaUakaVaWaXaiaNaOaPaYaFacab
-abadadaeaeaeaeaeaiaZbaaPbbbcbdawbeaiajajbfaxawaiaiaibgbgbgbgbgbgbeawbhawbiaiacab
-abadadaeaeaeaeaeaiaZawawbjbcbkaNblbmajajaibnaxbfboblbpbqbrbgbgbgbsaiaiblaiaiacab
+abadadaeaeaeaeaeaiaZbaaPbbbcbkawbeaiajajbfaxawaiaiaibgbgbgbgbgbgbeawbhawbiaiacab
+abadadaeaeaeaeaeaiaZawawbjbccBaNblbmajajaibnaxbfboblbpbqbrbgbgbgbsaiaiblaiaiacab
 abadadaeaeaeaeaebtaZbuaPbbbcbdawbeaiajajbfaxawaiaiaibgbgbgbgbgbgbeawbvawbwaiacab
 abadadadaeaeaeaeaiaQawawawawawawaSaiaTajaAaxawaiawaiakaLakbxbybzaibAbAawawaFacab
 abbBadadaeaeaeaeaiaibCaiaiaBaCaHaiaiaiaiaiaqaiaiaiaIaJaKaLbDbDbDaiawawawawaFacab

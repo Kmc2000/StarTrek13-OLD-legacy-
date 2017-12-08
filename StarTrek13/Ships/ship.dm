@@ -122,6 +122,8 @@
 		return
 	if(!on)
 		var/sample
+		if(!shields.len) //no shields, for some reason....
+			sample = ship.shield_health
 		for(var/obj/effect/adv_shield/S in shields)
 			sample = S.health
 		if(sample > 1000)
@@ -618,7 +620,7 @@
 	icon_state = "ship"
 
 /area/ship/target
-	name = "USS adminbus"
+	name = "USS Entax"
 	icon_state = "ship"
 
 

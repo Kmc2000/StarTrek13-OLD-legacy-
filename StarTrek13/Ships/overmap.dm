@@ -3,6 +3,8 @@
 
 //	face_atom(A)//////
 
+var/list/global/overmap_objects = list()
+
 /area/overmap
 	name = "generic overmap area"
 
@@ -21,7 +23,7 @@
 	marker = "cadaver"
 
 /area/ship/transport_zone/adminbus
-	name = "USS adminbus transport beacon"
+	name = "USS Entax transport beacon"
 	marker = "adminbus"
 
 /area/ship/transport_zone/ss13
@@ -70,6 +72,7 @@
 
 /obj/structure/overmap/New()
 	. = ..()
+	overmap_objects += src
 	START_PROCESSING(SSobj,src)
 	linkto()
 	linked_ship = get_area(src)
@@ -84,6 +87,25 @@
 	var/turf/theloc = get_turf(A)
 	forceMove(theloc)
 
+/*
+/obj/structure/overmap/proc/set_dir_to_target(target)
+	var/turf/here = get_turf(src)
+	var/turf/there = get_turf(target)
+	var/image/armoverlay = image('StarTrek13/icons/overmap_ships.dmi')
+	armoverlay.icon_state = "borg_arms"
+	armoverlay.layer = ABOVE_MOB_LAYER
+	if(here.z != there.z)
+		add_overlay("pinon[alert ? "alert" : ""]null")
+		return
+	if(get_dist_euclidian(here,there) <= minimum_range)
+
+	else
+		add_overlay(navbeam)
+		navbeam.setDir(get_dir(here, there))
+*/
+
+
+
 
 /obj/structure/overmap/proc/toggle_shields(mob/user)
 	generator.toggle(user)
@@ -97,7 +119,6 @@
 	station = 1
 	spawn_name = "station_spawn"
 	initial_icon_state = "station"
-	marker = "ss13"
 
 /obj/structure/overmap/away/station/starbase
 	name = "starbase59"
@@ -108,15 +129,20 @@
 	name = "a space ship"
 	icon = 'StarTrek13/icons/trek/overmap_ships.dmi'
 	icon_state = "generic"
-	marker = "cadaver"
 
 
 /obj/structure/overmap/ship/target //dummy for testing woo
-	name = "Ohno"
-	linked_ship = /area/ship/target
+	name = "USS Entax"
 	icon_state = "destroyer"
 	initial_icon_state = "destroyer"
-	marker = "adminbus"
+	spawn_name = "ship_spawn"
+
+
+/obj/structure/overmap/ship/nanotrasen
+	name = "NSV Muffin"
+	icon_state = "whiteship"
+	initial_icon_state = "whiteship"
+	spawn_name = "NT_SHIP"
 
 //So basically we're going to have ships that fly around in a box and shoot each other, i'll probably have the pilot mob possess the objects to fly them or something like that, otherwise I'll use cameras.
 
@@ -140,6 +166,7 @@
 /obj/structure/overmap/proc/enter(mob/user)
 	if(pilot)
 		to_chat(user, "you kick [pilot] off the ship controls!")
+	//	M.revive(full_heal = 1)
 		exit()
 		return 0
 	initial_loc = user.loc
