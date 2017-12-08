@@ -5,6 +5,7 @@ var/global/stsc[0]
 	desc = "A console used for ship to ship communications (STSC)."
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
+	var/ship_name = "USS Cadaver"//		Whomst'dve sent the message
 
 	//circuit = /obj/item/weapon/circuitboard/computer/stsccircuit	DEFINE THIS LATER
 	var
@@ -45,7 +46,8 @@ var/global/stsc[0]
 			dat += "<ul>"
 			for(var/obj/machinery/computer/shipcomms/sc in stsc)
 				if(sc.id != src.id)
-					dat += "<center><li>ID: [sc.id]"
+					//dat += "<center><li>ID: [sc.id]"
+					dat += "<center><li>[sc.ship_name]"
 					dat += "<A HREF='?src=\ref[src];action=viewmessagelogs;target=\ref[sc]'>Message Logs</A> | "
 					dat += "<A HREF='?src=\ref[src];action=sendmessage;target=\ref[sc]'>Send Message</A></li></center><BR>"
 

@@ -1,0 +1,53 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/turf/open/space/basic,/area/ship/nanotrasen)
+"c" = (/turf/closed/wall/ship/steel,/area/ship/nanotrasen)
+"d" = (/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"e" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"f" = (/obj/structure/closet/crate,/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"g" = (/obj/structure/window/trek/steel{dir = 4},/turf/open/floor/engine,/area/ship/nanotrasen)
+"h" = (/obj/machinery/door/airlock/command,/obj/structure/catwalk,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"i" = (/turf/open/floor/engine,/area/ship/nanotrasen)
+"j" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/engine,/area/ship/nanotrasen)
+"k" = (/obj/structure/catwalk,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"l" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/closed/wall/ship/steel,/area/ship/nanotrasen)
+"m" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/machinery/computer,/turf/open/floor/engine,/area/ship/nanotrasen)
+"n" = (/obj/machinery/space_battle/shield_generator,/turf/open/floor/engine,/area/ship/nanotrasen)
+"o" = (/obj/structure/catwalk,/obj/structure/chair{dir = 1},/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"p" = (/obj/structure/window/trek,/obj/structure/catwalk,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"q" = (/obj/structure/shuttle/engine/huge{icon_state = "huge_engine"; dir = 8},/turf/open/space/basic,/area/ship/nanotrasen)
+"r" = (/obj/structure/catwalk,/obj/machinery/door/airlock/command,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"s" = (/obj/structure/catwalk,/obj/structure/chair{dir = 4},/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"t" = (/obj/structure/fluff/helm/desk/tactical/nanotrasen{icon_state = "computer"; dir = 8},/obj/structure/catwalk,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"u" = (/obj/structure/catwalk,/obj/machinery/computer{icon_state = "computer"; dir = 8},/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"v" = (/obj/structure/catwalk,/obj/structure/chair,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"w" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/engine,/area/ship/nanotrasen)
+"x" = (/obj/effect/turf_decal/stripes/line,/turf/closed/wall/ship/steel,/area/ship/nanotrasen)
+"y" = (/obj/effect/turf_decal/stripes/line,/obj/machinery/computer{icon_state = "computer"; dir = 1},/turf/open/floor/engine,/area/ship/nanotrasen)
+"z" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"A" = (/obj/structure/closet/crate,/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel,/area/ship/nanotrasen)
+"B" = (/obj/effect/landmark/shield,/turf/open/space/basic,/area/ship/nanotrasen)
+"C" = (/turf/open/floor/plating,/area/ship/nanotrasen)
+"D" = (/obj/structure/catwalk,/turf/open/floor/plating,/area/ship/nanotrasen)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaccccccccccccccccaa
+BacCceeffffffeecCcaB
+BacccddddddddddcccaB
+BaaacddddddddddcaaaB
+BbccccccghhgccccccbB
+BbcdcijjjDDjjjlmnccB
+BbcdcDDDDDDDDDcokkpB
+BqcdcDDDDDDDDDrkstpB
+BbcdcDDDDDDDDDrksupB
+BbcdcDDDDDDDDDcvkkpB
+BqcdciwwwDDwwwxywccB
+BbccccccghhgccccccbB
+BabbcddddddddddcbbaB
+BacccddddddddddcccaB
+BacCczzAAAAAAzzcCcaB
+BaccccccccccccccccaB
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}
