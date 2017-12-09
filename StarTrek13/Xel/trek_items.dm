@@ -404,7 +404,7 @@
 	var/obj/item/device/analyzer/gasscan //attackself
 	var/obj/item/device/detective_scanner/detscan //attackself to print, afterattack to scan
 	var/medical = 0
-	var/obj/machinery/computer/transporter_control/transporter_controller
+	var/obj/machinery/computer/camera_advanced/transporter_control/transporter_controller
 
 /obj/item/weapon/tricordscanner/New()
 	. = ..()
@@ -488,7 +488,7 @@
 	var/setting = MEDICAL_MODE
 	var/scannerstatus = HAS_SCANNER
 	var/obj/item/weapon/tricordscanner/tscanner
-	var/obj/machinery/computer/transporter_control/transporter_controller
+	var/obj/machinery/computer/camera_advanced/transporter_control/transporter_controller
 	var/obj/machinery/buffer
 
 /obj/item/device/tricorder/New()

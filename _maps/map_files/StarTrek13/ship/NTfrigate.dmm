@@ -17,7 +17,7 @@
 "aq" = (/obj/machinery/door/poddoor{id = "oldship_ruin_gun"; name = "pod bay door"},/turf/open/floor/plating,/area/ship/nanotrasen)
 "ar" = (/obj/structure/shuttle/engine/propulsion/right{dir = 8},/turf/open/floor/plating/airless,/area/ship/nanotrasen)
 "as" = (/obj/machinery/space_battle/shield_generator,/turf/closed/wall/ship/steel,/area/ship/nanotrasen)
-"at" = (/obj/machinery/computer/transporter_control{dir = 8},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
+"at" = (/obj/machinery/computer/camera_advanced/transporter_control{dir = 8},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "au" = (/obj/machinery/door/airlock/titanium,/turf/open/floor/plating,/area/ship/nanotrasen)
 "av" = (/obj/structure/overmap/ship/nanotrasen,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aw" = (/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
