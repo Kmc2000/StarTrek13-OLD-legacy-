@@ -1,5 +1,5 @@
 
-/obj/machinery/computer/transporter_control
+/obj/machinery/computer/camera_advanced/transporter_control
 	name = "transporter control station"
 	icon = 'StarTrek13/icons/trek/star_trek.dmi'
 	icon_state = "helm"
@@ -14,35 +14,67 @@
 	var/turf/open/available_turfs = list()
 //	var/turf/open/teleport_target = null
 
-/obj/machinery/computer/transporter_control/proc/activate_pads()
+/obj/machinery/computer/camera_advanced/transporter_control/proc/activate_pads()
+	if(!available_turfs)
+		to_chat(usr, "<span class='notice'>Target has no linked transporter pads</span>")
+
 	for(var/obj/machinery/trek/transporter/T in linked)
 		T.teleport_target = pick(available_turfs)
 		T.Send()
 
-/obj/machinery/computer/transporter_control/proc/get_available_turfs(var/area/A)
+/obj/machinery/computer/camera_advanced/transporter_control/proc/get_available_turfs(var/area/A)
 	available_turfs = list()
 	for(var/turf/open/T in A)
 		available_turfs += T
 
+/obj/machinery/computer/camera_advanced/transporter_control/CreateEye()
+	eyeobj = new()
+	eyeobj.use_static = FALSE
+	eyeobj.origin = src
 
-/obj/machinery/computer/transporter_control/attack_hand(mob/user)
+/obj/machinery/computer/camera_advanced/transporter_control/give_eye_control(mob/user, var/list/L)
+	GrantActions(user)
+	current_user = user
+	eyeobj.eye_user = user
+	eyeobj.name = "Camera Eye ([user.name])"
+	user.remote_control = eyeobj
+	user.reset_perspective(eyeobj)
+	eyeobj.loc = pick(L)
+	//user.see_invisible = SEE_INVISIBLE_LIVING
+	//user.sight = 1
+	//user.see_in_dark = 2
+
+/obj/machinery/computer/camera_advanced/transporter_control/attack_hand(mob/user)
+	if(current_user)
+		to_chat(user, "The console is already in use!")
+		return
+
 	var/A
 	var/B
 	B = input(user, "Mode:","Transporter Control",B) in list("send object","retrieve away team member", "cancel")
 	switch(B)
 		if("send object")
 			if(linked.len)
-				A = input(user, "Target", "Transporter Control", A) as null|anything in destinations //activate_pads works here!
-				A = destinations[A]
-				if(!A)
-					A = pick(destinations)
-			//	var/area/thearea = A //problem
-				playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
+				A = input(user, "Target", "Transporter Control", A) as anything in destinations //activate_pads works here!
+				var/list/L = list()
+				var/obj/structure/overmap/O = A
+				for(var/turf/T in O.linked_ship)
+					L += T
+				//SUPER
+
+				if(!eyeobj)
+					CreateEye()
+
+				give_eye_control(user, L)
+
+				//SUPER
+				//playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
 			//	get_available_turfs(thearea)
-				activate_pads()
-				for(var/obj/machinery/trek/transporter/T in linked)
-					for(var/mob/M in T.loc)
-						retrievable += M
+				/*if(available_turfs)
+					activate_pads()
+					for(var/obj/machinery/trek/transporter/T in linked)
+						for(var/mob/M in T.loc)
+							retrievable += M*/
 			else
 				to_chat(user, "<span class='notice'>There are no linked transporter pads</span>")
 		if("retrieve away team member")
@@ -66,7 +98,7 @@
 		if("cancel")
 			return
 
-/obj/machinery/computer/transporter_control/attackby(obj/item/I, mob/user)
+/obj/machinery/computer/camera_advanced/transporter_control/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/tricorder))
 		var/obj/item/device/tricorder/S = I
 		if(istype(S.buffer, /obj/machinery/trek/transporter))
@@ -91,18 +123,17 @@
 	icon_state = "transporter"
 	anchored = TRUE
 	var/turf/open/teleport_target = null
-	var/obj/machinery/computer/transporter_control/transporter_controller = null
+	var/obj/machinery/computer/camera_advanced/transporter_control/transporter_controller = null
 
 /obj/machinery/trek/transporter/proc/Warp(mob/living/target)
 	if(!target.buckled)
 		target.forceMove(get_turf(src))
 
 /obj/machinery/trek/transporter/proc/Send()
-//	if(teleport_target == null)
-	//	teleport_target = GLOB.teleportlocs[pick(GLOB.teleportlocs)]
 	flick("alien-pad", src)
-	for(var/mob/living/target in loc)
-		target.forceMove(teleport_target)
+	for(var/atom/movable/target in loc)
+		if(target != src)
+			target.forceMove(teleport_target)
 
 /obj/machinery/trek/transporter/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)

@@ -92,7 +92,7 @@
 "bN" = (/obj/structure/table,/turf/open/floor/borg/trek,/area/ship/target)
 "bO" = (/obj/structure/closet/secure_closet/personal,/turf/open/floor/borg/trek,/area/ship/target)
 "bP" = (/obj/machinery/trek/transporter,/obj/item/device/tricorder,/turf/open/floor/borg/trek/beige,/area/ship/target)
-"bQ" = (/obj/machinery/computer/transporter_control,/turf/open/floor/borg/trek/beige,/area/ship/target)
+"bQ" = (/obj/machinery/computer/camera_advanced/transporter_control,/turf/open/floor/borg/trek/beige,/area/ship/target)
 "bR" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-21"},/turf/open/floor/borg/trek,/area/ship/target)
 "bS" = (/obj/structure/bed/pod,/turf/open/floor/borg/trek,/area/ship/target)
 "bT" = (/obj/structure/window/trek{dir = 4},/turf/open/floor/borg/trek,/area/ship/target)

@@ -58,7 +58,7 @@ var/list/global/overmap_objects = list()
 	var/weapons_charge_time = 60 //6 seconds inbetween shots.
 	var/in_use1 = 0 //firing weapons?
 	var/initial_icon_state = "generic"
-	var/obj/machinery/computer/transporter_control/transporter //linked transporter CONTROLLER
+	var/obj/machinery/computer/camera_advanced/transporter_control/transporter //linked transporter CONTROLLER
 	var/spawn_name = "ship_spawn"
 	var/spawn_random = 1
 	var/turf/initial_loc = null //where our pilot was standing upon entry
@@ -196,7 +196,7 @@ var/list/global/overmap_objects = list()
 	for(var/obj/machinery/space_battle/shield_generator/G in linked_ship)
 		generator = G
 		G.ship = src
-	for(var/obj/machinery/computer/transporter_control/T in linked_ship)
+	for(var/obj/machinery/computer/camera_advanced/transporter_control/T in linked_ship)
 		transporter = T
 
 /obj/structure/overmap/take_damage(amount,turf/target)
@@ -222,10 +222,9 @@ var/list/global/overmap_objects = list()
 		transporter.destinations = list()
 		transporter.destinations += OM.linked_ship
 		transporter.available_turfs = list()
-		var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
-		var/A = pick(thelist)
-		var/turf/open/theturf = get_turf(A)
-		transporter.available_turfs = theturf
+		//var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
+		//for(var/obj/machinery/trek/transporter/T in OM.transporter.linked)
+		//	transporter.available_turfs += get_turf(T)
 	else
 		transporter.destinations = list()
 
