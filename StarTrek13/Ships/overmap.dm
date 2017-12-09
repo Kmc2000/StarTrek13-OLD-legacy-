@@ -69,6 +69,8 @@ var/list/global/overmap_objects = list()
 	var/sensor_range = 10 //radius in which ships can be beamed to, amongst other things
 	var/area/transport_zone = null
 	var/marker = "cadaver"
+	var/obj/structure/overmap/nav_target = null
+	var/navbeam = null
 
 /obj/structure/overmap/New()
 	. = ..()
@@ -87,25 +89,23 @@ var/list/global/overmap_objects = list()
 	var/turf/theloc = get_turf(A)
 	forceMove(theloc)
 
-/*
-/obj/structure/overmap/proc/set_dir_to_target(target)
+/obj/structure/overmap/proc/set_nav_target(mob/user)
+	var/A
+	A = input("What ship shall we track?", "Ship navigation", A) as anything in overmap_objects
+	nav_target = overmap_objects[A]
+	set_dir_to_target(nav_target)
+
+/obj/structure/overmap/proc/set_dir_to_target(var/atom/movable/target)
+	overlays.Cut()
+	navbeam = null
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
-	var/image/armoverlay = image('StarTrek13/icons/overmap_ships.dmi')
-	armoverlay.icon_state = "borg_arms"
-	armoverlay.layer = ABOVE_MOB_LAYER
-	if(here.z != there.z)
-		add_overlay("pinon[alert ? "alert" : ""]null")
-		return
-	if(get_dist_euclidian(here,there) <= minimum_range)
-
-	else
-		add_overlay(navbeam)
-		navbeam.setDir(get_dir(here, there))
-*/
-
-
-
+	navbeam = image('StarTrek13/icons/trek/overmap_ships.dmi')
+	navbeam.icon_state = "navbeam"
+	navbeam.layer = ABOVE_MOB_LAYER
+//	if(get_dist_euclidian(here,there) <= minimum_range)
+	add_overlay(navbeam)
+	navbeam.setDir(get_dir(here, there))
 
 /obj/structure/overmap/proc/toggle_shields(mob/user)
 	generator.toggle(user)
@@ -230,13 +230,15 @@ var/list/global/overmap_objects = list()
 		transporter.destinations = list()
 
 /obj/structure/overmap/CtrlClick(mob/user)
-	if(pilot == user) //don't change the firing mode of enemy ships etc.
-		if(mode != TORPEDO_MODE)
-			mode = TORPEDO_MODE
-			to_chat(pilot, "switched to torpedo firing mode")
-		else
-			mode = PHASER_MODE
-			to_chat(pilot, "switched to phaser firing mode")
+	if(pilot == user)
+		set_nav_target(user)
+//	if(pilot == user) //don't change the firing mode of enemy ships etc.
+	//	if(mode != TORPEDO_MODE)
+	//		mode = TORPEDO_MODE
+	//		to_chat(pilot, "switched to torpedo firing mode")
+	//	else
+	//		mode = PHASER_MODE
+	//		to_chat(pilot, "switched to phaser firing mode")
 
 /obj/structure/overmap/process()
 	recharge --
@@ -259,6 +261,14 @@ var/list/global/overmap_objects = list()
 	//	transporter.destinations = list()
 	if(pilot.loc != src)
 		exit() //pilot has been tele'd out, remove them!
+	update_navbeam()
+
+/obj/structure/overmap/proc/update_navbeam()
+	var/turf/here = get_turf(src)
+	var/turf/there = get_turf(nav_target)
+	navbeam.dir = get_dir(here, there)
+	return 1
+
 /obj/structure/overmap/proc/get_interactibles()
 	for(var/obj/structure/overmap/OM in interactables_near_ship)
 		if(OM.shields_active == 0) //its shields are down
