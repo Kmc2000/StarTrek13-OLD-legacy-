@@ -10,7 +10,7 @@
 	var/list/retrievable = list()
 	var/list/linked = list()
 	var/list/tricorders = list()
-	var/area/destinations = list() //where can we go, relates to overmap.dm
+	var/area/list/destinations = list() //where can we go, relates to overmap.dm
 	var/turf/open/available_turfs = list()
 //	var/turf/open/teleport_target = null
 
@@ -32,7 +32,7 @@
 	eyeobj.use_static = FALSE
 	eyeobj.origin = src
 
-/obj/machinery/computer/camera_advanced/transporter_control/give_eye_control(mob/user, var/list/L)
+/obj/machinery/computer/camera_advanced/transporter_control/give_eye_control(mob/living/carbon/user, var/list/L)
 	GrantActions(user)
 	current_user = user
 	eyeobj.eye_user = user
@@ -40,9 +40,8 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.loc = pick(L)
-	//user.see_invisible = SEE_INVISIBLE_LIVING
-	//user.sight = 1
-	//user.see_in_dark = 2
+	user.sight = 60 //see through walls
+	user.lighting_alpha = 0 //night vision
 
 /obj/machinery/computer/camera_advanced/transporter_control/attack_hand(mob/user)
 	if(current_user)
@@ -51,32 +50,32 @@
 
 	var/A
 	var/B
-	B = input(user, "Mode:","Transporter Control",B) in list("send object","retrieve away team member", "cancel")
+
+	B = input(user, "Mode:","Transporter Control",B) in list("Manual Beam","Automatic Beam","retrieve away team member", "cancel")
 	switch(B)
-		if("send object")
+		if("Manual Beam")
 			if(linked.len)
-				A = input(user, "Target", "Transporter Control", A) as anything in overmap_objects //activate_pads works here!
+				A = input(user, "Target", "Transporter Control", A) as obj in destinations //activate_pads works here!
+				if(!A)
+					to_chat(user, "<span class='notice'>Scanner cannot locate any locations to beam to.</span>")
+					return
 				var/list/L = list()
 				var/obj/structure/overmap/O = A
+
+				if(O.has_shields())
+					to_chat(user, "<span class='notice'>Cannot sustain a lock, target has their shield up</span>")
+					return
+
 				for(var/turf/T in O.linked_ship)
 					L += T
-				//SUPER
-
 				if(!eyeobj)
 					CreateEye()
-
 				give_eye_control(user, L)
-
-				//SUPER
-				//playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-			//	get_available_turfs(thearea)
-				/*if(available_turfs)
-					activate_pads()
-					for(var/obj/machinery/trek/transporter/T in linked)
-						for(var/mob/M in T.loc)
-							retrievable += M*/
 			else
 				to_chat(user, "<span class='notice'>There are no linked transporter pads</span>")
+		if("Automatic Beam")
+			//this bit is dependent on power networks (ie APCs) depending on how it works
+			to_chat(user, "<span class='danger'>!!! not yet implemented because bucket has deadlines and is totally not lazy !!!</span>")
 		if("retrieve away team member")
 			var/C = input(user, "Beam someone back", "Transporter Control") as anything in retrievable
 			if(!C in retrievable)
