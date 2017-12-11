@@ -131,7 +131,7 @@
 "cA" = (/obj/item/twohanded/required/kirbyplants{icon_state = "plant-21"},/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/ship/overmap/starbase)
 "cB" = (/turf/open/floor/plasteel/green/side{dir = 8},/area/ship/overmap/starbase)
 "cC" = (/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/green/side{dir = 4},/area/ship/overmap/starbase)
-"cD" = (/obj/machinery/computer/transporter_control,/turf/open/floor/plasteel,/area/ship/overmap/starbase)
+"cD" = (/obj/machinery/computer/camera_advanced/transporter_control,/turf/open/floor/plasteel,/area/ship/overmap/starbase)
 "cE" = (/obj/effect/decal/cleanable/dirt,/obj/structure/filingcabinet/filingcabinet,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/ship/overmap/starbase)
 "cF" = (/obj/structure/ladder/unbreakable{height = 2; id = "starbase"; name = "turbolift"},/turf/open/floor/borg/trek/beige,/area/ship/overmap/starbase)
 "cG" = (/turf/open/floor/plasteel/green/corner{dir = 8},/area/ship/overmap/starbase)

@@ -55,7 +55,7 @@
 	switch(B)
 		if("send object")
 			if(linked.len)
-				A = input(user, "Target", "Transporter Control", A) as anything in destinations //activate_pads works here!
+				A = input(user, "Target", "Transporter Control", A) as anything in overmap_objects //activate_pads works here!
 				var/list/L = list()
 				var/obj/structure/overmap/O = A
 				for(var/turf/T in O.linked_ship)

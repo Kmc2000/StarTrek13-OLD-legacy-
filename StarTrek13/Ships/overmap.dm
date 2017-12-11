@@ -7,6 +7,9 @@ var/list/global/overmap_objects = list()
 
 /area/overmap
 	name = "generic overmap area"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	flags_1 = NONE
+	requires_power = FALSE
 
 /area/overmap/starbase
 	name = "starbase 59"
@@ -70,7 +73,7 @@ var/list/global/overmap_objects = list()
 	var/area/transport_zone = null
 	var/marker = "cadaver"
 	var/obj/structure/overmap/nav_target = null
-	var/navbeam = null
+	var/image/navbeam = null
 
 /obj/structure/overmap/New()
 	. = ..()
@@ -103,9 +106,10 @@ var/list/global/overmap_objects = list()
 	navbeam = image('StarTrek13/icons/trek/overmap_ships.dmi')
 	navbeam.icon_state = "navbeam"
 	navbeam.layer = ABOVE_MOB_LAYER
+	navbeam.setDir(get_dir(here, there))
 //	if(get_dist_euclidian(here,there) <= minimum_range)
 	add_overlay(navbeam)
-	navbeam.setDir(get_dir(here, there))
+
 
 /obj/structure/overmap/proc/toggle_shields(mob/user)
 	generator.toggle(user)
