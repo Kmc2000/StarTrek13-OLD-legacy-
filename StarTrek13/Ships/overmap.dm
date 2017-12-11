@@ -3,7 +3,7 @@
 
 //	face_atom(A)//////
 
-var/list/global/overmap_objects = list()
+var/global/list/overmap_objects = list()
 
 /area/overmap
 	name = "generic overmap area"
@@ -46,7 +46,7 @@ var/list/global/overmap_objects = list()
 	can_be_unanchored = 0 //Don't anchor a ship with a wrench, these are going to be people sized
 	density = 1
 	var/list/interactables_near_ship = list()
-	var/area/linked_ship = /area/ship //CHANGE ME WITH THE DIFFERENT TYPES!
+	var/area/linked_ship //CHANGE ME WITH THE DIFFERENT TYPES!
 	var/max_shield_health = 20000 //default max shield health, changes on process
 	var/shields_active = 0
 	pixel_y = -32
@@ -58,7 +58,7 @@ var/list/global/overmap_objects = list()
 	var/weapons_charge_time = 60 //6 seconds inbetween shots.
 	var/in_use1 = 0 //firing weapons?
 	var/initial_icon_state = "generic"
-	var/obj/machinery/computer/camera_advanced/transporter_control/transporter //linked transporter CONTROLLER
+	var/obj/machinery/computer/camera_advanced/transporter_control/transporters = list()//linked transporter CONTROLLER
 	var/spawn_name = "ship_spawn"
 	var/spawn_random = 1
 	var/turf/initial_loc = null //where our pilot was standing upon entry
@@ -197,7 +197,7 @@ var/list/global/overmap_objects = list()
 		generator = G
 		G.ship = src
 	for(var/obj/machinery/computer/camera_advanced/transporter_control/T in linked_ship)
-		transporter = T
+		transporters += T
 
 /obj/structure/overmap/take_damage(amount,turf/target)
 	if(has_shields())
@@ -217,16 +217,14 @@ var/list/global/overmap_objects = list()
 		playsound(src.loc, 'StarTrek13/sound/borg/machines/shiphit.ogg',100,0) //clang
 		return
 
-/obj/structure/overmap/proc/update_transporters(obj/structure/overmap/OM)
-	if(!OM.has_shields())	//only when their shields are down
-		transporter.destinations = list()
-		transporter.destinations += OM.linked_ship
-		transporter.available_turfs = list()
+/obj/structure/overmap/proc/update_transporters()
+	var/list/L = range(5, src)
+
+	for(var/obj/machinery/computer/camera_advanced/transporter_control/TC in transporters)
+		TC.destinations = L
 		//var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
 		//for(var/obj/machinery/trek/transporter/T in OM.transporter.linked)
 		//	transporter.available_turfs += get_turf(T)
-	else
-		transporter.destinations = list()
 
 /obj/structure/overmap/CtrlClick(mob/user)
 	if(pilot == user) //don't change the firing mode of enemy ships etc.
@@ -261,7 +259,7 @@ var/list/global/overmap_objects = list()
 /obj/structure/overmap/proc/get_interactibles()
 	for(var/obj/structure/overmap/OM in interactables_near_ship)
 		if(OM.shields_active == 0) //its shields are down
-			update_transporters(OM)
+			update_transporters()
 			return 1
 		else
 			return 0
@@ -276,7 +274,6 @@ var/list/global/overmap_objects = list()
 	if(interactables_near_ship.len > 0)
 		return 1
 	else//nope
-		transporter.destinations = list()
 		return 0
 
 /obj/structure/overmap/proc/destroy(severity)
@@ -354,7 +351,7 @@ var/list/global/overmap_objects = list()
 		return
 
 /obj/structure/overmap/proc/fire_torpedo(obj/structure/overmap/OM)
-	var/list/thelist = list(OM.transporter,OM.weapons,OM.generator,OM.initial_loc)
+	var/list/thelist = list(OM.transporters,OM.weapons,OM.generator,OM.initial_loc)
 	var/fuck = pick(thelist)
 	var/turf/theturf = get_turf(fuck)
 	weapons.fire_torpedo(theturf, pilot)
