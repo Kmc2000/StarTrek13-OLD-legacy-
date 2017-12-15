@@ -1,0 +1,116 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/turf/open/floor/plating/ashplanet/rocky,/area/space)
+"c" = (/turf/open/floor/plating/dirt/dark,/area/space)
+"d" = (/turf/closed/indestructible/rock,/area/space)
+"e" = (/turf/closed/wall/ship/steel,/area/space)
+"f" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/space)
+"g" = (/turf/open/floor/plating,/area/space)
+"h" = (/obj/vehicle/atv,/turf/open/floor/plating/ashplanet/rocky,/area/space)
+"i" = (/turf/open/floor/plasteel,/area/space)
+"j" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel,/area/space)
+"k" = (/turf/open/floor/plasteel/green/side{dir = 4},/area/space)
+"l" = (/turf/open/floor/plasteel/green/side{dir = 8},/area/space)
+"m" = (/turf/open/floor/plasteel/black,/area/space)
+"n" = (/turf/open/floor/plasteel/black,/area/ship/overmap/nanotrasen/trading_outpost)
+"o" = (/obj/structure/window/trek/steel,/turf/open/floor/plasteel,/area/space)
+"p" = (/obj/structure/window/trek/steel{dir = 4},/turf/open/floor/plasteel,/area/space)
+"q" = (/obj/structure/window/trek/steel,/turf/open/floor/plasteel,/area/ship/nanotrasen/freighter)
+"r" = (/turf/open/floor/plasteel/barber,/area/space)
+"s" = (/obj/machinery/vending/snack/random,/turf/open/floor/plasteel/black,/area/ship/overmap/nanotrasen/trading_outpost)
+"t" = (/obj/machinery/vending/cola,/turf/open/floor/plasteel/black,/area/ship/overmap/nanotrasen/trading_outpost)
+"u" = (/turf/open/floor/plasteel/floorgrime,/area/space)
+"v" = (/turf/open/floor/plasteel/green/side{dir = 4},/area/ship/overmap/nanotrasen/trading_outpost)
+"w" = (/turf/open/floor/plasteel/green/side{dir = 10},/area/space)
+"x" = (/turf/open/floor/plasteel/green/side,/area/space)
+"y" = (/turf/open/floor/plasteel/green/side{dir = 1},/area/space)
+"z" = (/obj/machinery/vending/cigarette,/turf/open/floor/plasteel/green/side{dir = 4},/area/ship/overmap/nanotrasen/trading_outpost)
+"A" = (/turf/open/floor/plasteel/green/side{dir = 9},/area/space)
+"B" = (/turf/closed/wall/borg,/area/space)
+"C" = (/turf/open/floor/borg/trek,/area/space)
+"D" = (/obj/machinery/door/airlock/borg,/turf/open/floor/plasteel/black,/area/space)
+
+(1,1,1) = {"
+dddddddddddddddddddddddddddddddddddddddd
+dbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccbbbbbbd
+dbbbbbbbbbbbbbbbbbbbbbbbbbbbcbbccbbbbbbd
+dbbbcbbbbbbbcbbbbcbbbbbbccbbcbbbbcccbbbd
+dbbbcbbbbbbbbbbbbbbbbbbcccbbbbbbbcccbbbd
+dbcbcbcbcbbbbbbbbbbcccbbbbbbbbbbbbbbbbbd
+dbbbcbbbcbbbbcbccbbbbcbbbbbbbbbbccbbcbbd
+dbbbcbbccccbbcbbbbbbbbbbbbccbbbbbbbbcbbd
+dbbcbbbbbccbbcbbbbbbbbbbbbbbbbbbbbbbbbbd
+dbbcbbbbbccbccbbbccbbcbbbbbcccbbcbbcbbcd
+dbbbccccbccbccbbbbbbbbcccbcccbbbcbbcbbbd
+dbcbbbbbbbbbbbbbbbbbbbbbbcbbbbbbbcccccbd
+dbbbbbbcbbbbcbbbbbbbbbbbbbbbbbccbcccccbd
+dbbcbbbcbccbbbbbcccbbbbccbbbbbccbcccbcbd
+dbbbbbbbbbbbbbcccccbbbbccbbccbbcccbcbbcd
+dbbbcccccbbbbbccbbbbbbbbcbbcccbbbbbbbbcd
+dcbccccccbbbbcccbcbbbbbbbbbbbbbbccbbbcbd
+dbbeffeccbbbbccbbbbbbbbcbbccbbbbcccbbcbd
+dbceggecccbbbbbcbbbbbcccbcccbbbbcccbcbbd
+dbbeggeccbbbbbcccbbcccccbcbcbbbbbbbbbbbd
+dbbeggeccbbbcbbbbbbccbccbbbbbbcbbbbbbbbd
+dbbeggecbbcbbbcbbbbccbbbbbbbcbcbbbbbbbbd
+dbeeffeeeeeebbbbbbbbbcbbbbbbcccbcbbbbbbd
+dbekmmleiiiebbbbbbbbbbbbbbbbcccbccejjebd
+dbekmmliuuuebbbbbbbbbbbbbbbbbbbbcceiiebd
+dbekmmleiiueeeeebbeeeeebbbbbcbcbbbeiiebd
+dbekmmlouiieiiieeeeiiiecbhbhbcbbbbeiiebd
+dbekmmliuuiemmmmmmmmmmebbbbbcbbbbBBjjBbd
+dbekmmlouuueimiiiiiimieBBBBBBBBBBBiiiBbd
+dbekmmlepipeemeppppemeeBiiuuiiiiBBCCCBbd
+dbevnnwxxxxexmxxxxxxmxeBiiuuiuiiBBCiCBbd
+dbevnnmmmmmemmmmmmmmmmmmmmmmmmmmmDiiiBbd
+dbekmmmmmmmemmmmmmmmmmmmmmmmmmmmmDCCiBbd
+dbekmmAyyyyeymyyyyyyymeByyymmmyyBBCCCBbd
+dbekmmlepipeemppeieppmeBppppmpppBBCCCBbd
+dbevnnlorrreimiiiiiiimBiiiimmmiiiBCiiBbd
+dbevnnlorrreimmmmmmmmmBiiiimmmiiiBCCiBbd
+dbezstlqrrreimmmmmmmmmBiiiimmmiiiBiiiBbd
+dbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeBBBBBbd
+dddddddddddddddddddddddddddddddddddddddd
+"}
+
+(1,1,2) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

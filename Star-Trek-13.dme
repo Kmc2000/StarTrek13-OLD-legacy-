@@ -18,6 +18,7 @@
 #include "_maps\map_files\StarTrek13\overmap.dmm"
 #include "_maps\map_files\StarTrek13\overmap\nanotrasen_research_bunker (1).dmm"
 #include "_maps\map_files\StarTrek13\overmap\outpost2 (1).dmm"
+#include "_maps\map_files\StarTrek13\overmap\small_derelict_asteroid.dmm"
 #include "_maps\map_files\StarTrek13\ship\capital_class1.dmm"
 #include "_maps\map_files\StarTrek13\ship\frigate.dmm"
 #include "_maps\map_files\StarTrek13\ship\NTfrigate.dmm"
