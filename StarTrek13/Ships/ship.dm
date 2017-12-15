@@ -628,6 +628,21 @@
 	name = "NSV Muffin"
 	icon_state = "ship"
 
+/area/ship/nanotrasen/freighter
+	name = "NSV Crates"
+	icon_state = "ship"
+
+/area/ship/overmap/nanotrasen
+	name = "Nanotrasen station"
+	icon_state = "ship"
+
+/area/ship/overmap/nanotrasen/research
+	name = "NSV Woolf research outpost"
+	icon_state = "ship"
+
+/area/ship/overmap/nanotrasen/trading_outpost
+	name = "NSV Mercator trade station."
+	icon_state = "ship"
 
 
 

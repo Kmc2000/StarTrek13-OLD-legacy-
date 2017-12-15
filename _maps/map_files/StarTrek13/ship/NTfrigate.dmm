@@ -27,6 +27,7 @@
 "aA" = (/obj/structure/window/trek/steel{dir = 4},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aB" = (/obj/structure/chair{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aC" = (/obj/structure/catwalk,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
+"aD" = (/obj/effect/landmark/shield,/turf/open/space/basic,/area/ship/nanotrasen)
 "aE" = (/obj/machinery/door/airlock/titanium,/obj/structure/catwalk,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aF" = (/obj/structure/window/trek/steel,/turf/open/floor/plating,/area/ship/nanotrasen)
 "aG" = (/obj/machinery/portable_atmospherics/scrubber,/obj/item/grenade/chem_grenade/metalfoam,/obj/item/grenade/chem_grenade/smart_metal_foam,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
@@ -35,7 +36,6 @@
 "aJ" = (/obj/structure/table,/obj/item/gun/energy/laser/retro,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aK" = (/obj/machinery/door/airlock/glass,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aL" = (/obj/machinery/door/airlock/glass,/obj/structure/catwalk,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
-"aM" = (/obj/structure/table,/obj/structure/catwalk,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aO" = (/obj/machinery/light{dir = 4},/obj/structure/fluff/helm/desk/tactical/nanotrasen{icon_state = "computer"; dir = 8},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aP" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/item/grenade/chem_grenade/metalfoam,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 "aQ" = (/obj/structure/frame/computer{anchored = 1},/obj/structure/light_construct,/obj/machinery/light,/obj/structure/catwalk,/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
@@ -48,34 +48,34 @@
 "bc" = (/obj/structure/frame/computer{anchored = 1},/turf/open/floor/mineral/titanium,/area/ship/nanotrasen)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaababaaaaaaaaaaaaabacabaAaAaAaAabacabaaaaaa
-aaaaaaaaaaaaaaaaaaadababaaaaaaaaababaCaCaCaCaCaCaCaCabaaaaaa
-aaaaaaaaaaaaaaaaaaahaiababaaababaeabaCaeaeaeaeaeaeakabababaa
-aaaaaaaaaaaaaaaaaaahaialabababaCaCabaCaeaeaeaeaCaCaCaoapaqaa
-aaaaaaaaaaaaaaaaaaahaialalabaCaCaeabaCaeaeaeaCababaRabababab
-aaaaaaaaaaaaaaaaaaarabalalauaCaeaeabaCaCaCaCaCabaCaCayaHaCab
-aaaaaaaaaaaaaaaaaaaaababababaCaeaeababaRabacababaCaeazazaeab
-aaaaaaaaaaaaaaaaaaababaCaCabaCaeafafafafafaeaCabaCaeaeaeaeaF
-abaAaAaAaAabaaaaababaCaeaCabaCanabababacabawaCabaCaeaeaeaeaF
-abaCaTaSaSababababaCaeaeaCaFaCanabaeaeaeabawaCaFaCaeaeaIaJaF
-abaCaCaCaCaEaCaEaCawaeaeaCaKaCanabaeaeaeasawaCaLaCavaeaBaOaF
-abaCaGaPaUababababaCaeaeaCaFaCanabamaeaeabawaCaFaCaeaeaIaIaF
-abaAaAaAaAabaaaaababaCaeaCabaCanabaeaeaeabawaCabaCaeaeaeaeaF
-aaaaaaaaaaaaaaaaaaababaCaCabaCanabacabaRabawaCabaMaeaeaeaeaF
-aaaaaaaaaaaaaaaaaaaaababababaCaeagagagagagaeaCabaMaeaXaeaeab
-aaaaaaaaaaaaaaaaaaadabalalauaCaeaCaCaCaCaCaCaCabaMaCaQaCaCab
-aaaaaaaaaaaaaaaaaaahaialalabaCaCabacababaYaYaYababababababab
-aaaaaaaaaaaaaaaaaaahaialabababaeabaeaeaeaeaeaeaeaeaeaeababaa
-aaaaaaaaaaaaaaaaaaahaiababaaabababaeaxaeaeaeaeaeaebcababaaaa
-aaaaaaaaaaaaaaaaaaarababaaaaaaaaabababaeaeajataeabababaaaaaa
-aaaaaaaaaaaaaaaaaaababaaaaaaaaaaaaaaabababababababaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaababaaaaaaaaaaaaabacabaAaAaAaAacabaaaaaaaD
+aDaaaaaaaaaaaaaaaaadababaaaaaaaaababaCaCaCaCaCaCaCabaaaaaaaD
+aDaaaaaaaaaaaaaaaaahaiababaaababaeabaCaeaeaeaeaeakabababaaaD
+aDaaaaaaaaaaaaaaaaahaialabababaCaCabaCaeaeaeaeaCaCaoapaqaaaD
+aDaaaaaaaaaaaaaaaaahaialalabaCaCaeabaCaeaeaeaCabaRababababaD
+aDaaaaaaaaaaaaaaaaarabalalauaCaeaeabaCaCaCaCaCabaCayaHaCabaD
+aDaaaaaaaaaaaaaaaaaaababababaCaeaeababaRabacababaeazazaeabaD
+aDaaaaaaaaaaaaaaaaababaCaCabaCaeafafafafafaeaCabaeaeaeaeaFaD
+aDabaAaAaAabaaaaababaCaeaCabaCanabababacabawaCabaeaeaeaeaFaD
+aDabaTaSaSababababaCaeaeaCaFaCanabaeaeaeabawaCaFaeaeaIaJaFaD
+aDabaCaCaCaEaCaEaCawaeaeaCaKaCanabaeaeaeasawaCaLavaeaBaOaFaD
+aDabaGaPaUababababaCaeaeaCaFaCanabamaeaeabawaCaFaeaeaIaIaFaD
+aDabaAaAaAabaaaaababaCaeaCabaCanabaeaeaeabawaCabaeaeaeaeaFaD
+aDaaaaaaaaaaaaaaaaababaCaCabaCanabacabaRabawaCabaeaeaeaeaFaD
+aDaaaaaaaaaaaaaaaaaaababababaCaeagagagagagaeaCabaeaXaeaeabaD
+aDaaaaaaaaaaaaaaaaadabalalauaCaeaCaCaCaCaCaCaCabaCaQaCaCabaD
+aDaaaaaaaaaaaaaaaaahaialalabaCaCabacababaYaYaYababababababaD
+aDaaaaaaaaaaaaaaaaahaialabababaeabaeaeaeaeaeaeaeaeaeababaaaD
+aDaaaaaaaaaaaaaaaaahaiababaaabababaeaxaeaeaeaeaebcababaaaaaD
+aDaaaaaaaaaaaaaaaaarababaaaaaaaaabababaeaeajataeababaaaaaaaD
+aDaaaaaaaaaaaaaaaaababaaaaaaaaaaaaaaababababababaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
+aDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaD
 "}

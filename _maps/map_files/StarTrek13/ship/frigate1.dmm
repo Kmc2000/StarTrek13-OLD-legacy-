@@ -126,9 +126,8 @@
 "cv" = (/obj/machinery/hydroponics/constructable,/turf/open/floor/borg/trek/beige,/area/ship/target)
 "cw" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/borg/trek/beige,/area/ship/target)
 "cx" = (/turf/open/water,/area/space)
-"cy" = (/turf/open/floor/borg/trek/light,/area/ship/transport_zone/adminbus)
-"cz" = (/turf/open/floor/borg/trek/blue,/area/ship/transport_zone/adminbus)
-"cA" = (/obj/effect/landmark/transport_zone,/turf/open/floor/borg/trek/blue,/area/ship/transport_zone/adminbus)
+"cy" = (/turf/open/floor/borg/trek/light,/area/space)
+"cz" = (/turf/open/floor/borg/trek/blue,/area/space)
 "cB" = (/obj/machinery/computer/shipcomms{dir = 4; icon_state = "computer"; ship_name = "USS Entax"},/turf/open/floor/borg/trek/red,/area/ship/target)
 
 (1,1,1) = {"
@@ -142,7 +141,7 @@ abacacacacacacacacacacacacacacacaeahaeaiaiaiaiaiaiaiaiaiaiaiaiaiaeaeaeacacacacab
 abacacacacacacacacacadadadaeaeaeaeajaeaiaiakakakakakakakakakaiaiaealacacacacacab
 abacacacacacacacacacadamaeaeaiaiaianaiaoaoaoaoaoaoapaqaoaoaoaoaoaiaearacacacacab
 abacacacacacacacacacadaeaeaiaiasatasauavcycycyawawawaxawawawawavaiaeaeaeaeaeacab
-abacacacacacacacacacaeayazaiawaxaxaxaxaxczcAczaxaxaxaxaxaxaxaxaxaAaiaBaCaiaiacab
+abacacacacacacacacacaeayazaiawaxaxaxaxaxczczczaxaxaxaxaxaxaxaxaxaAaiaBaCaiaiacab
 abadadadadadadaeaeaeaeaiaiaiawaxawawawawcyczcyawawawaxawawawawaxaDawaEawawaFacab
 abadadadaeaeaeaeaiaiaiaGaiaiaCaHaiaiaiaiaiaqaiaiaiaIaJaKaLaMaMaMaiaNaOaPawaFacab
 abadadadaeaeaeaeaiaQaRawawawawawaSaiaTajaAaxawaiawaiakaUakaVaWaXaiaNaOaPaYaFacab

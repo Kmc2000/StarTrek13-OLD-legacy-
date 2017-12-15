@@ -14,24 +14,9 @@ var/global/list/overmap_objects = list()
 /area/overmap/starbase
 	name = "starbase 59"
 
-/obj/effect/landmark/transport_zone
-	name = "transport zone marker"
+/area/overmap/starbase
+	name = "starbase 59"
 
-/area/ship/transport_zone
-	name = "starbase 59 transport beacon" //So you put a small area like this around where people will transport to, then place a transporter marker there ^, this will become where people beam to
-	var/marker = "starbase"
-
-/area/ship/transport_zone/cadaver
-	name = "USS Cadaver transport beacon"
-	marker = "cadaver"
-
-/area/ship/transport_zone/adminbus
-	name = "USS Entax transport beacon"
-	marker = "adminbus"
-
-/area/ship/transport_zone/ss13
-	name = "NT ss13 transport beacon"
-	marker = "ss13"
 #define TORPEDO_MODE 1//1309
 #define PHASER_MODE 2
 
@@ -72,13 +57,13 @@ var/global/list/overmap_objects = list()
 	var/sensor_range = 10 //radius in which ships can be beamed to, amongst other things
 	var/area/transport_zone = null
 	var/marker = "cadaver"
-	var/obj/structure/overmap/nav_target = null
-	var/image/navbeam = null
+	var/atom/movable/nav_target = null
+	var/navigating = 0
 
 /obj/structure/overmap/New()
 	. = ..()
 	overmap_objects += src
-	START_PROCESSING(SSobj,src)
+	START_PROCESSING(SSfastprocess,src)
 	linkto()
 	linked_ship = get_area(src)
 	var/list/thelist = list()
@@ -92,24 +77,6 @@ var/global/list/overmap_objects = list()
 	var/turf/theloc = get_turf(A)
 	forceMove(theloc)
 
-/obj/structure/overmap/proc/set_nav_target(mob/user)
-	var/A
-	A = input("What ship shall we track?", "Ship navigation", A) as anything in overmap_objects
-	nav_target = overmap_objects[A]
-	set_dir_to_target(nav_target)
-
-/obj/structure/overmap/proc/set_dir_to_target(var/atom/movable/target)
-	overlays.Cut()
-	navbeam = null
-	var/turf/here = get_turf(src)
-	var/turf/there = get_turf(target)
-	navbeam = image('StarTrek13/icons/trek/overmap_ships.dmi')
-	navbeam.icon_state = "navbeam"
-	navbeam.layer = ABOVE_MOB_LAYER
-	navbeam.setDir(get_dir(here, there))
-//	if(get_dist_euclidian(here,there) <= minimum_range)
-	add_overlay(navbeam)
-
 
 /obj/structure/overmap/proc/toggle_shields(mob/user)
 	generator.toggle(user)
@@ -119,7 +86,6 @@ var/global/list/overmap_objects = list()
 	icon = 'StarTrek13/icons/trek/large_overmap.dmi'
 	icon_state = "station"
 	spawn_random = 0
-	linked_ship = /area/overmap
 	station = 1
 	spawn_name = "station_spawn"
 	initial_icon_state = "station"
@@ -130,10 +96,23 @@ var/global/list/overmap_objects = list()
 	marker = "starbase"
 
 /obj/structure/overmap/ship
-	name = "a space ship"
+	name = "USS Cadaver"
 	icon = 'StarTrek13/icons/trek/overmap_ships.dmi'
 	icon_state = "generic"
 
+/obj/structure/overmap/away/station/nanotrasen/shop
+	name = "NSV Mercator trading outpost"
+	icon = 'StarTrek13/icons/trek/large_overmap.dmi'
+	icon_state = "shop"
+	spawn_name = "shop_spawn"
+	initial_icon_state = "shop"
+
+/obj/structure/overmap/away/station/nanotrasen/research_bunker
+	name = "NSV Woolf research outpost"
+	icon = 'StarTrek13/icons/trek/large_overmap.dmi'
+	icon_state = "research"
+	spawn_name = "research_spawn"
+	initial_icon_state = "research"
 
 /obj/structure/overmap/ship/target //dummy for testing woo
 	name = "USS Entax"
@@ -148,6 +127,12 @@ var/global/list/overmap_objects = list()
 	initial_icon_state = "whiteship"
 	spawn_name = "NT_SHIP"
 
+/obj/structure/overmap/ship/nanotrasen/freighter
+	name = "NSV Crates"
+	icon_state = "freighter"
+	initial_icon_state = "freighter"
+	spawn_name = "FREIGHTER_SPAWN"
+
 //So basically we're going to have ships that fly around in a box and shoot each other, i'll probably have the pilot mob possess the objects to fly them or something like that, otherwise I'll use cameras.
 
 /obj/structure/overmap/ship/relaymove(mob/user,direction)
@@ -155,6 +140,8 @@ var/global/list/overmap_objects = list()
 		return //add things here!
 	if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
 		return
+	if(navigating)
+		navigating = 0
 	step(src, direction)
 	next_vehicle_move = world.time + vehicle_move_delay
 	//use_power
@@ -245,6 +232,8 @@ var/global/list/overmap_objects = list()
 	recharge --
 	linkto()
 	location()
+	if(navigating)
+		navigate()
 	get_interactibles()
 	//transporter.destinations = list() //so when we leave the area, it stops being transportable.
 	var/obj/effect/adv_shield/theshield = pick(generator.shields) //sample a random shield for health and stats.
@@ -262,13 +251,37 @@ var/global/list/overmap_objects = list()
 	//	transporter.destinations = list()
 	if(pilot.loc != src)
 		exit() //pilot has been tele'd out, remove them!
-	update_navbeam()
 
-/obj/structure/overmap/proc/update_navbeam()
-	var/turf/here = get_turf(src)
-	var/turf/there = get_turf(nav_target)
-	navbeam.dir = get_dir(here, there)
-	return 1
+
+
+/obj/structure/overmap/proc/navigate()
+	if(world.time < next_vehicle_move)
+		return 0
+	next_vehicle_move = world.time + vehicle_move_delay
+	step_to(src,nav_target)
+	var/d = get_dir(src, nav_target)		//thanks lummox
+	if(d & (d-1))//not a cardinal direction
+		setDir(d)
+		step(src,dir)
+	if(src in orange(4, nav_target))
+		navigating = 0
+		to_chat(pilot, "finished tracking [nav_target]. Autopilot disengaged")
+
+/obj/structure/overmap/proc/set_nav_target(mob/user)
+	if(!station)
+		var/A
+		A = input("What ship shall we track?", "Ship navigation", A) as null|anything in overmap_objects
+		var/obj/structure/overmap/O = A
+		nav_target = O
+		//nav_target = overmap_objects[A]
+		set_dir_to_target()
+		to_chat(pilot, "autopilot engaged, it will be disabled if you try and move the ship again.")
+	else
+		to_chat(pilot, "ERROR: [src] does not have engines")
+
+/obj/structure/overmap/proc/set_dir_to_target()
+	if(!navigating)
+		navigating = 1
 
 /obj/structure/overmap/proc/get_interactibles()
 	for(var/obj/structure/overmap/OM in interactables_near_ship)
@@ -291,7 +304,7 @@ var/global/list/overmap_objects = list()
 		return 0
 
 /obj/structure/overmap/proc/destroy(severity)
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSfastprocess,src)
 	exit()
 	switch(severity)
 		if(1)

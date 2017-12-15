@@ -17,7 +17,6 @@
 /obj/machinery/computer/camera_advanced/transporter_control/proc/activate_pads()
 	if(!available_turfs)
 		to_chat(usr, "<span class='notice'>Target has no linked transporter pads</span>")
-
 	for(var/obj/machinery/trek/transporter/T in linked)
 		T.teleport_target = pick(available_turfs)
 		T.Send()
@@ -50,6 +49,7 @@
 
 	var/A
 	var/B
+	available_turfs = list()
 
 	B = input(user, "Mode:","Transporter Control",B) in list("Manual Beam","Automatic Beam","retrieve away team member", "cancel")
 	switch(B)
@@ -71,6 +71,12 @@
 				if(!eyeobj)
 					CreateEye()
 				give_eye_control(user, L)
+				sleep(20) // 2 seconds to get that fuck sticc targeted.
+				var/turf/theturf = get_turf(eyeobj)
+				for(var/turf/open/T in orange(3,theturf))	//get a 3x3 grid of tiles to teleport people on, so you don't just get a weird stack.
+					available_turfs += T
+				available_turfs += theturf
+				activate_pads()
 			else
 				to_chat(user, "<span class='notice'>There are no linked transporter pads</span>")
 		if("Automatic Beam")
