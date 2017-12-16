@@ -163,7 +163,7 @@ var/global/list/overmap_objects = list()
 	initial_loc = user.loc
 	user.loc = src
 	pilot = user
-	pilot.status_flags |= GODMODE
+//	pilot.status_flags |= GODMODE
 
 /obj/structure/overmap/AltClick()
 	exit()
@@ -172,7 +172,7 @@ var/global/list/overmap_objects = list()
 	to_chat(pilot,"you have stopped controlling [src]")
 	pilot.forceMove(initial_loc)
 	initial_loc = null
-	pilot.status_flags -= GODMODE
+//	pilot.status_flags -= GODMODE
 	pilot = null
 
 

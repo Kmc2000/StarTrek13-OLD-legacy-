@@ -71,7 +71,8 @@
 				if(!eyeobj)
 					CreateEye()
 				give_eye_control(user, L)
-				sleep(20) // 2 seconds to get that fuck sticc targeted.
+				to_chat(user, "WARNING, automatic beaming will occur in 10 seconds! once you have found a suitable location, stop moving the camera PS. Sorry for that!")
+				sleep(100) // 10 seconds to get that fuck sticc targeted.
 				var/turf/theturf = get_turf(eyeobj)
 				for(var/turf/open/T in orange(3,theturf))	//get a 3x3 grid of tiles to teleport people on, so you don't just get a weird stack.
 					available_turfs += T
@@ -83,23 +84,43 @@
 			//this bit is dependent on power networks (ie APCs) depending on how it works
 			to_chat(user, "<span class='danger'>!!! not yet implemented because bucket has deadlines and is totally not lazy !!!</span>")
 		if("retrieve away team member")
-			var/C = input(user, "Beam someone back", "Transporter Control") as anything in retrievable
-			if(!C in retrievable)
-				return
-			var/atom/movable/target = C
-			playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-			retrievable -= target
-			for(var/obj/machinery/trek/transporter/T in linked)
-				animate(target,'StarTrek13/icons/trek/star_trek.dmi',"transportout")
-				playsound(target.loc, 'StarTrek13/sound/borg/machines/transporter2.ogg', 40, 4)
+			if(linked.len)
+				A = input(user, "Retrieve from where", "Transporter Control", A) as obj in destinations //activate_pads works here!
+				if(!A)
+					to_chat(user, "<span class='notice'>Scanner cannot locate any locations to beam to.</span>")
+					return
+				var/list/L = list()
+				var/obj/structure/overmap/O = A
+
+				if(O.has_shields())
+					to_chat(user, "<span class='notice'>Cannot sustain a lock, target has their shield up</span>")
+					return
+
+				for(var/turf/T in O.linked_ship)
+					L += T
+				if(!eyeobj)
+					CreateEye()
+				give_eye_control(user, L)
+				sleep(100) // 2 seconds to get that fuck sticc targeted.
+				to_chat(user, "WARNING, automatic beaming will occur in 10 seconds! once you have found a suitable location, stop moving the camera PS. Sorry for that!")
+				var/turf/theturf = get_turf(eyeobj)
+				for(var/atom/movable/T in orange(3,theturf))	// grab all mobs in a 3x3 radius.
+					if(istype(T, /mob) || istype(T, /obj/structure/closet))
+						retrievable += T //so within a range of the camera it'll beam up PEOPLE. (only people
 				playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
-				var/obj/machinery/trek/transporter/Z = pick(linked)
-				target.forceMove(Z.loc)
-				target.alpha = 255
-				//Z.rematerialize(target)
-				animate(Z,'StarTrek13/icons/trek/star_trek.dmi',"transportin")
-                        //        Z.alpha = 255
-				break
+				for(var/atom/movable/M in retrievable)	//need to add beaming up crates
+					M.alpha = 255
+					var/atom/movable/target = M
+					for(var/obj/machinery/trek/transporter/T in linked)
+						animate(target,'StarTrek13/icons/trek/star_trek.dmi',"transportout")
+						playsound(target.loc, 'StarTrek13/sound/borg/machines/transporter2.ogg', 40, 4)
+						playsound(src.loc, 'StarTrek13/sound/borg/machines/transporter.ogg', 40, 4)
+						var/obj/machinery/trek/transporter/Z = pick(linked)
+						target.forceMove(Z.loc)
+						target.alpha = 255
+						//Z.rematerialize(target)
+						animate(Z,'StarTrek13/icons/trek/star_trek.dmi',"transportin")
+						retrievable -= target
 		if("cancel")
 			return
 
@@ -126,6 +147,7 @@
 	can_be_unanchored = 0
 	icon = 'StarTrek13/icons/trek/star_trek.dmi'
 	icon_state = "transporter"
+	layer = 2
 	anchored = TRUE
 	var/turf/open/teleport_target = null
 	var/obj/machinery/computer/camera_advanced/transporter_control/transporter_controller = null
@@ -137,8 +159,10 @@
 /obj/machinery/trek/transporter/proc/Send()
 	flick("alien-pad", src)
 	for(var/atom/movable/target in loc)
-		if(target != src)
-			target.forceMove(teleport_target)
+		if(istype(target, /mob) || istype(target, /obj/structure/closet))
+			if(target != src)
+				target.forceMove(teleport_target)
+			//	transporter_controller.retrievable += target
 
 /obj/machinery/trek/transporter/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)
