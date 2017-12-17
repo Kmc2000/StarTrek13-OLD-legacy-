@@ -1,5 +1,6 @@
 language: generic
 sudo: false
+
 env:
     global:
     - BYOND_MAJOR="511"
@@ -27,10 +28,10 @@ addons:
       - libstdc++6:i386
       - python
       - python-pip
-  
+
 install:
   - tools/travis/install_build_tools.sh
-  
+
 before_script:
   - tools/travis/before_build_tools.sh
   - tools/travis/before_build_byond.sh
@@ -39,4 +40,3 @@ script:
   - tools/travis/check_filedirs.sh Star-Trek-13.dme
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
-
