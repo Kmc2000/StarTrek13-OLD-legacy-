@@ -28,11 +28,11 @@ addons:
       - python
       - python-pip
 
-install:
-  - tools/travis/install_build_tools.exe
-
 before_install:
-  - chmod +x tools/travis/build.sh
+  - chmod +x tools/travis/install_build_tools.sh
+      
+install:
+  - tools/travis/install_build_tools.sh
   
 before_script:
   - tools/travis/before_build_tools.sh
