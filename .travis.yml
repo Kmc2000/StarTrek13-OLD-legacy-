@@ -31,6 +31,9 @@ addons:
 install:
   - tools/travis/install_build_tools.sh
 
+before_install:
+  - chmod +x build.sh
+  
 before_script:
   - tools/travis/before_build_tools.sh
   - tools/travis/before_build_byond.sh
