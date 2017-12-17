@@ -32,7 +32,7 @@ install:
   - tools/travis/install_build_tools.exe
 
 before_install:
-  - chmod +x build.sh
+  - chmod +x tools/travis/build.sh
   
 before_script:
   - tools/travis/before_build_tools.sh
