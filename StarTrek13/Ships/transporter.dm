@@ -14,6 +14,16 @@
 	var/turf/open/available_turfs = list()
 //	var/turf/open/teleport_target = null
 
+/obj/machinery/computer/camera_advanced/transporter_control/New()
+	. = ..()
+	link_by_range()
+
+/obj/machinery/computer/camera_advanced/transporter_control/proc/link_by_range()
+	for(var/obj/machinery/trek/transporter/A in orange(10,src))
+		if(istype(A, /obj/machinery/trek/transporter))
+			linked += A
+
+
 /obj/machinery/computer/camera_advanced/transporter_control/proc/activate_pads()
 	if(!available_turfs)
 		to_chat(usr, "<span class='notice'>Target has no linked transporter pads</span>")
